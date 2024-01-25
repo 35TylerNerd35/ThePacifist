@@ -169,40 +169,34 @@ public class PlayerController : MonoBehaviour
     {
         //Handle speed based on input
         if(crouch.ReadValue<float>() > 0 && run.ReadValue<float>() > 0)
-        {
             speed = runningCrouchSpeed;
-        }
         else if(crouch.ReadValue<float>() > 0)
-        {
             speed = crouchSpeed;
-        }
         else if(run.ReadValue<float>() > 0)
-        {
             speed = runSpeed;
-        }
         else
-        {
             speed = walkSpeed;
-        }
     }
 
     void JumpHandler()
     {
-        if(jump.ReadValue<float>() > 0)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * -9.8f);
-        }
+        if(jump.ReadValue<float>() == 0)
+            return;
+
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * -9.8f);
     }
 
     void DashHandler()
     {
-        if(canDash || isDashing)
-        {
-            //Add velocity in direction of camera
-            dashVel = Camera.main.transform.forward * dashForce;
-            velocity += dashVel;
-            StartCoroutine(DashCooldown());
-        }
+        if(!canDash)
+            return;
+        if(!isDashing)
+            return;
+
+        //Add velocity in direction of camera
+        dashVel = Camera.main.transform.forward * dashForce;
+        velocity += dashVel;
+        StartCoroutine(DashCooldown());
     }
 
     void DashCooldownHandler()
@@ -214,12 +208,12 @@ public class PlayerController : MonoBehaviour
 
     void DashFloatHandler()
     {
+        if(gravity == 0)
+            return;
+
         //Handle additional velocity from dashing in zero gravity
-        if(gravity != 0)
-        {
-            isPlayerFloating = false;
-            velocity = Vector3.zero;
-        }
+        isPlayerFloating = false;
+        velocity = Vector3.zero;
     }
 
     IEnumerator DashCooldown()

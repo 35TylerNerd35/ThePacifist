@@ -26,27 +26,25 @@ public class GameOptions : MonoBehaviour
 
     public void TabSwitch(GameObject activateTab)
     {
-        if(!isEasingIn && !isEasingOut)
+        if(isEasingIn || isEasingOut)
+            return;
+
+        //Hide all tabs
+        foreach(GameObject tab in tabs)
         {
-           //Hide all tabs
-            foreach(GameObject tab in tabs)
-            {
-                tab.SetActive(false);
-            }
-
-            if(doAnim)
-            {
-                tabToAnim = activateTab.transform.GetChild(0);
-                isEasingOut = true;
-            }
-            else
-            {
-                doAnim = true;
-            }
-
-            //Display selected tab
-            activateTab.SetActive(true); 
+            tab.SetActive(false);
         }
+
+        if(doAnim)
+        {
+            tabToAnim = activateTab.transform.GetChild(0);
+            isEasingOut = true;
+        }
+        else
+            doAnim = true;
+
+        //Display selected tab
+        activateTab.SetActive(true); 
     }
 
     void Update()

@@ -13,17 +13,13 @@ public class VLPlayer : MonoBehaviour
     void Enable()
     {
         if(_isOnEnable)
-        {
             PlayLine();
-        }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player" && _isOnTrigger)
-        {
             PlayLine();
-        }
     }
 
     void PlayLine()
@@ -31,9 +27,7 @@ public class VLPlayer : MonoBehaviour
         VLManager manager = GameObject.FindWithTag("ManagerParent").transform.GetChild(2).GetComponent<VLManager>();
 
         if(_doesClearPrevious)
-        {
             manager.ClearQueue();
-        }
 
         //Add to queue
         for(int i = 0; i < subsToAdd.Length; i++)

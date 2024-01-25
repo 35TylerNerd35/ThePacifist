@@ -293,15 +293,10 @@ public class ControlCenter : MonoBehaviour
 
         
         if(responses == 0)
-        {
-            //Deal with non-commands
             SubmitText("<color=red>WARNING: </color><color=yellow>Command not found </color>", responseLines, responseLog, 11);
-        }
-        else
-        {
-            //Begin any function on object named after command
-            transform.SendMessage("Console" + functionName.Substring(0, 1).ToUpper() + functionName.Substring(1).ToLower());
-        }
+            return;
+
+        transform.SendMessage("Console" + functionName.Substring(0, 1).ToUpper() + functionName.Substring(1).ToLower());
     }
     
 
@@ -327,10 +322,7 @@ public class ControlCenter : MonoBehaviour
         responseLog.text += " to " + GravityCmd.isGravOn;
     }
 
-    void ConsoleTest()
-    {
-        SubmitText("---------------------", responseLines, responseLog, 11);
-    }
+    void ConsoleTest() => SubmitText("---------------------", responseLines, responseLog, 11);
 
     void ConsoleMakemeadmin()
     {

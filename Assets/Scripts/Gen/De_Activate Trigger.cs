@@ -10,14 +10,12 @@ public class De_ActivateTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
-        {
-            obj.SetActive(_activeState);
+        if(other.tag != "Player")
+            return;
 
-            if(_destroySelf)
-            {
-                Destroy(gameObject);
-            }
-        }
+        obj.SetActive(_activeState);
+
+        if(_destroySelf)
+            Destroy(gameObject);
     }
 }

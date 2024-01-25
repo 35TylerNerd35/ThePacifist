@@ -17,17 +17,17 @@ public class Narrator : MonoBehaviour
 
     void Update()
     {
-        if(narratorTrigger)
-        {
-            //Disable trigger
-            narratorTrigger = false;
-            
-            //Set text
-            subtitleText.text = subtitles[narratorIteration];
+        if(!narratorTrigger)
+            return;
 
-            //Play Audio clip
-            GetComponent<AudioSource>().clip = voiceLines[narratorIteration];
-            GetComponent<AudioSource>().Play();
-        }
+        //Disable trigger
+        narratorTrigger = false;
+        
+        //Set text
+        subtitleText.text = subtitles[narratorIteration];
+
+        //Play Audio clip
+        GetComponent<AudioSource>().clip = voiceLines[narratorIteration];
+        GetComponent<AudioSource>().Play();
     }
 }

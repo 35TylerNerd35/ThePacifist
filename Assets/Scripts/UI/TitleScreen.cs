@@ -24,15 +24,8 @@ public class TitleScreen : MonoBehaviour
     float currentAnimTime;
     bool isAnimForwards;
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
-    public void StartGame()
-    {
-        StartCoroutine(LoadSceneAsync(1));
-    }
+    public void QuitGame() => Application.Quit();
+    public void StartGame() => StartCoroutine(LoadSceneAsync(1));
 
     IEnumerator LoadSceneAsync(int SceneID)
     {
@@ -41,7 +34,7 @@ public class TitleScreen : MonoBehaviour
 
         while(!operation.isDone)
         {
-            float progressTime = Mathf.Clamp01(operation.progress / 0.9f);
+            float progressTime = Mathf.Clamp01(operation.progress / 1f);
             loadBar.fillAmount = progressTime;
 
             yield return null;
@@ -50,18 +43,18 @@ public class TitleScreen : MonoBehaviour
 
     void Update()
     {
+        ScaleTitle();
+
         currentAnimTime += Time.deltaTime;
 
-        if(currentAnimTime >= animTime)
-        {
-            //Reset timer
-            currentAnimTime = 0;
+        if(currentAnimTime < animTime)
+            return;
 
-            //Change anim state
-            isAnimForwards = !isAnimForwards;
-        }
+        //Reset timer
+        currentAnimTime = 0;
 
-        ScaleTitle();
+        //Change anim state
+        isAnimForwards = !isAnimForwards;
     }
 
     void ScaleTitle()

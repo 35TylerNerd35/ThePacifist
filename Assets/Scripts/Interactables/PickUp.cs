@@ -58,52 +58,51 @@ public class PickUp : MonoBehaviour, IInteract
         }
         else
         {
-            if(!isHolding)
-            {
-                //Grab player cam
-                playerCam = Camera.main.transform;
+            if(isHolding)
+                return;
 
-                //Grab aim pos
-                aimPoint = playerCam.GetChild(0);
+            //Grab player cam
+            playerCam = Camera.main.transform;
 
-                //Setup variables
-                isHolding = true;
-                isHeldObject = true;
+            //Grab aim pos
+            aimPoint = playerCam.GetChild(0);
 
-                //Deactivate gravity
-                GetComponent<Rigidbody>().useGravity = false;
+            //Setup variables
+            isHolding = true;
+            isHeldObject = true;
 
-                //Prevent collisions with player
-                player = GameObject.FindGameObjectWithTag("Player");     
-                Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>());
-            }
+            //Deactivate gravity
+            GetComponent<Rigidbody>().useGravity = false;
+
+            //Prevent collisions with player
+            player = GameObject.FindGameObjectWithTag("Player");     
         }
     }
 
     void Update()
     {
-        if(isHeldObject)
-        {
-            var step =  speed * Time.deltaTime;
+        if(!isHeldObject)
+            return;
 
-            //Move to hold point
-            transform.position = Vector3.MoveTowards(aimPoint.position, playerCam.position, step);
+        var step =  speed * Time.deltaTime;
 
-            if(throwHeld.ReadValue<float>() > 0)
-            {
-                //Activate gravity
-                GetComponent<Rigidbody>().useGravity = true;
+        //Move to hold point
+        transform.position = Vector3.MoveTowards(aimPoint.position, playerCam.position, step);
 
-                //Revert variables
-                isHolding = false;
-                isHeldObject = false;
-                
-                //Add forwards force
-                GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * throwForce);
+        if(throwHeld.ReadValue<float>() == 0)
+            return;
 
-                //Re-enable player collision
-                Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>(), false);
-            }
-        }
+        //Activate gravity
+        GetComponent<Rigidbody>().useGravity = true;
+
+        //Revert variables
+        isHolding = false;
+        isHeldObject = false;
+        
+        //Add forwards force
+        GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * throwForce);
+
+        //Re-enable player collision
+        Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>(), false);
     }
 }
