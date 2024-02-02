@@ -293,10 +293,12 @@ public class ControlCenter : MonoBehaviour
 
         
         if(responses == 0)
+        {
             SubmitText("<color=red>WARNING: </color><color=yellow>Command not found </color>", responseLines, responseLog, 11);
             return;
+        }
 
-        transform.SendMessage("Console" + functionName.Substring(0, 1).ToUpper() + functionName.Substring(1).ToLower());
+        transform.SendMessage("Console" + functionName[..1].ToUpper() + functionName.Substring(1).ToLower());
     }
     
 
