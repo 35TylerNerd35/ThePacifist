@@ -41,7 +41,7 @@ public class GameOptions : MonoBehaviour
             isEasingOut = true;
         }
         else
-            doAnim = true;
+            // doAnim = true;
 
         //Display selected tab
         activateTab.SetActive(true); 
