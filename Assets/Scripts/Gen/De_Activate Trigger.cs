@@ -13,6 +13,9 @@ public class De_ActivateTrigger : MonoBehaviour
         if(other.tag != "Player")
             return;
 
+        if(obj == null)
+            return;
+
         obj.SetActive(_activeState);
 
         if(_destroySelf)

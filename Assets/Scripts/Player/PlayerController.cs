@@ -188,9 +188,7 @@ public class PlayerController : MonoBehaviour
 
     void DashHandler()
     {
-        if(!canDash)
-            return;
-        if(!isDashing)
+        if(!canDash && !isDashing)
             return;
 
         //Add velocity in direction of camera
