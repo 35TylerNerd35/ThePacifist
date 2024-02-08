@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2187134643316002381}
   - component: {fileID: 480681509976516114}
   - component: {fileID: 1203409395911136581}
-  - component: {fileID: 6997470846985054126}
+  - component: {fileID: 5312156700865526040}
   m_Layer: 5
   m_Name: Resume
   m_TagString: Untagged
@@ -165,7 +165,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5040093705729266370}
   m_Father: {fileID: 2697722574865100234}
@@ -257,8 +257,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480681509976516114}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!95 &6997470846985054126
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PauseActivator, Assembly-CSharp
+        m_MethodName: SetPaused
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!95 &5312156700865526040
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -268,7 +280,7 @@ Animator:
   m_GameObject: {fileID: 1813691296484027869}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a2ce0bc908fe7494581c1bdf1006275d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 45a9082c6793bed47b7b88c19af7fd87, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -291,7 +303,7 @@ GameObject:
   - component: {fileID: 1912843968177806070}
   - component: {fileID: 156269420522385336}
   - component: {fileID: 538917698846105593}
-  - component: {fileID: 7594569901140128877}
+  - component: {fileID: 2097795218960996670}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -402,7 +414,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &7594569901140128877
+--- !u!95 &2097795218960996670
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -412,7 +424,7 @@ Animator:
   m_GameObject: {fileID: 3225852462407451695}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a2ce0bc908fe7494581c1bdf1006275d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 45a9082c6793bed47b7b88c19af7fd87, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -435,7 +447,7 @@ GameObject:
   - component: {fileID: 4037587658486404218}
   - component: {fileID: 4717910664405154950}
   - component: {fileID: 5346488418257547611}
-  - component: {fileID: 4584147951466934399}
+  - component: {fileID: 1768115571845506446}
   m_Layer: 5
   m_Name: Quit[Main]
   m_TagString: Untagged
@@ -546,7 +558,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &4584147951466934399
+--- !u!95 &1768115571845506446
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -556,7 +568,7 @@ Animator:
   m_GameObject: {fileID: 3533020059545739193}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a2ce0bc908fe7494581c1bdf1006275d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 45a9082c6793bed47b7b88c19af7fd87, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -761,6 +773,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd26a647671a014429f6a0eb8fbc3239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hud: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &5391543457389524872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,7 +1097,7 @@ GameObject:
   - component: {fileID: 8925208447217292965}
   - component: {fileID: 8814697000988288618}
   - component: {fileID: 4969495824043983578}
-  - component: {fileID: 189859437434751727}
+  - component: {fileID: 3321232161611373609}
   m_Layer: 5
   m_Name: Quit[Desktop]
   m_TagString: Untagged
@@ -1194,7 +1208,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &189859437434751727
+--- !u!95 &3321232161611373609
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -1204,7 +1218,7 @@ Animator:
   m_GameObject: {fileID: 7974708690383377023}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a2ce0bc908fe7494581c1bdf1006275d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 45a9082c6793bed47b7b88c19af7fd87, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
