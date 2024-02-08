@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   savePointIndex: 0
   playerPos: {x: 1.5, y: 0, z: 12}
-  isBatonUnlocked: 0
-  isTaserUnlocked: 0
+  playerRot: {x: 0, y: 0, z: 0, w: 0}
+  isBatonUnlocked: 1
+  isTaserUnlocked: 1
