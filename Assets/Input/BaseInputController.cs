@@ -426,6 +426,15 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""978bd8dd-a46f-412d-ba49-bd8f93efcb35"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -635,6 +644,28 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Temp1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f825d14e-10c9-4610-827a-e55533a60d1f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ceb29820-7596-436a-923b-41e45fb3236d"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -867,6 +898,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
         m_MenuInputs_Select = m_MenuInputs.FindAction("Select", throwIfNotFound: true);
         m_MenuInputs_Temp = m_MenuInputs.FindAction("Temp", throwIfNotFound: true);
         m_MenuInputs_Temp1 = m_MenuInputs.FindAction("Temp1", throwIfNotFound: true);
+        m_MenuInputs_Menu = m_MenuInputs.FindAction("Menu", throwIfNotFound: true);
         // ConsoleInputs
         m_ConsoleInputs = asset.FindActionMap("ConsoleInputs", throwIfNotFound: true);
         m_ConsoleInputs_SelectAll = m_ConsoleInputs.FindAction("SelectAll", throwIfNotFound: true);
@@ -1042,6 +1074,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuInputs_Select;
     private readonly InputAction m_MenuInputs_Temp;
     private readonly InputAction m_MenuInputs_Temp1;
+    private readonly InputAction m_MenuInputs_Menu;
     public struct MenuInputsActions
     {
         private @BaseInputController m_Wrapper;
@@ -1051,6 +1084,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
         public InputAction @Select => m_Wrapper.m_MenuInputs_Select;
         public InputAction @Temp => m_Wrapper.m_MenuInputs_Temp;
         public InputAction @Temp1 => m_Wrapper.m_MenuInputs_Temp1;
+        public InputAction @Menu => m_Wrapper.m_MenuInputs_Menu;
         public InputActionMap Get() { return m_Wrapper.m_MenuInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1075,6 +1109,9 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
             @Temp1.started += instance.OnTemp1;
             @Temp1.performed += instance.OnTemp1;
             @Temp1.canceled += instance.OnTemp1;
+            @Menu.started += instance.OnMenu;
+            @Menu.performed += instance.OnMenu;
+            @Menu.canceled += instance.OnMenu;
         }
 
         private void UnregisterCallbacks(IMenuInputsActions instance)
@@ -1094,6 +1131,9 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
             @Temp1.started -= instance.OnTemp1;
             @Temp1.performed -= instance.OnTemp1;
             @Temp1.canceled -= instance.OnTemp1;
+            @Menu.started -= instance.OnMenu;
+            @Menu.performed -= instance.OnMenu;
+            @Menu.canceled -= instance.OnMenu;
         }
 
         public void RemoveCallbacks(IMenuInputsActions instance)
@@ -1207,6 +1247,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
         void OnSelect(InputAction.CallbackContext context);
         void OnTemp(InputAction.CallbackContext context);
         void OnTemp1(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
     public interface IConsoleInputsActions
     {
