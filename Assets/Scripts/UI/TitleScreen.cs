@@ -13,17 +13,24 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] Transform titleObj;
     [SerializeField] Animator promptAnim;
 
+    void Awake() => Cursor.lockState = CursorLockMode.None;
+
     public void StartGame() => StartCoroutine(LoadSceneAsync(1));
 
     IEnumerator LoadSceneAsync(int SceneID)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(SceneID);
         loadScreen.SetActive(true);
+        float initScaleX = loadBar.transform.localScale.x;
+        loadBar.transform.localScale = new Vector3(0, loadBar.transform.localScale.y, loadBar.transform.localScale.z);
+        yield return new WaitForSeconds(2f);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(SceneID);
 
         while(!operation.isDone)
         {
-            float progressTime = Mathf.Clamp01(operation.progress / 1f);
-            loadBar.fillAmount = progressTime;
+            Debug.Log(operation.progress);
+            float progressTime = initScaleX * operation.progress;
+            loadBar.transform.localScale = new Vector3(progressTime, loadBar.transform.localScale.y, loadBar.transform.localScale.z);
 
             yield return null;
         }

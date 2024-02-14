@@ -5,75 +5,48 @@ using UnityEngine.UI;
 
 public class GameOptions : MonoBehaviour
 {
+    [Header("Animators")]
+    [SerializeField] Animator swipeAnimator;
+    [SerializeField] Animator fadeAnimator;
     [Header("Tab Switching")]
     [SerializeField] GameObject[] tabs;
-    [SerializeField] float easeSpeed;
-    [SerializeField] Vector3[] targetScale;
-
-    bool isEasingIn;
-    bool isEasingOut;
-    Transform tabToAnim;
-    bool doAnim;
+    [SerializeField] Color indicatorColorOriginal;
+    [SerializeField] Color indicatorColorSelected;
+    [SerializeField] Image[] indicators;
 
     void OnEnable()
     {
-        doAnim = false;
+        TabSwitch(0);
+    }
 
-        //Set tab to gameplay
-        TabSwitch(tabs[0]);
+
+    public void Disable(Animator anim)
+    {
+        swipeAnimator.Play("Hide");
+        fadeAnimator.Play("Hide");
+
+        StartCoroutine(DisableOptions());
+    }
+
+    IEnumerator DisableOptions()
+    {
+        yield return new WaitForSeconds(2f);
+        gameObject.SetActive(false);
     }
     
 
-    public void TabSwitch(GameObject activateTab)
+    public void TabSwitch(int activateTab)
     {
-        if(isEasingIn || isEasingOut)
-            return;
-
         //Hide all tabs
         foreach(GameObject tab in tabs)
-        {
             tab.SetActive(false);
-        }
 
-        if(doAnim)
-        {
-            tabToAnim = activateTab.transform.GetChild(0);
-            isEasingOut = true;
-        }
-        else
-            // doAnim = true;
+        //Reset all indicators
+        foreach(Image indicator in indicators)
+            indicator.color = indicatorColorOriginal;
 
         //Display selected tab
-        activateTab.SetActive(true); 
-    }
-
-    void Update()
-    {
-        if(isEasingOut)
-        {
-            float speed = easeSpeed * Time.deltaTime;
-
-            tabToAnim.transform.localScale += -Vector3.one * speed;
-
-            if(Vector3.Distance(tabToAnim.transform.localScale, targetScale[0]) < .01f)
-            {
-                isEasingIn = true;
-                isEasingOut = false;
-                speed = 0;
-            }
-        }
-        else if(isEasingIn)
-        {
-            float speed = easeSpeed * Time.deltaTime;
-
-            tabToAnim.transform.localScale += Vector3.one * speed;
-
-            if(Vector3.Distance(tabToAnim.transform.localScale, targetScale[1]) < 0.008f)
-            {
-                tabToAnim.transform.localScale = targetScale[1];
-                isEasingIn = false;
-                speed = 0;
-            }
-        }
+        tabs[activateTab].SetActive(true); 
+        indicators[activateTab].color = indicatorColorSelected;
     }
 }

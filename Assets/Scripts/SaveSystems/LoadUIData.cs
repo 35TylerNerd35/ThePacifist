@@ -74,6 +74,9 @@ public class LoadUIData : MonoBehaviour
             //Set the value of the toggle (convert int to bool)
             var.isOn = boolIntVal != 0;
 
+            if(var.GetComponent<ToggleGraphics>())
+                var.GetComponent<ToggleGraphics>().ToggleValueChanged(var);
+
             //Add to iteration count
             currentToggleIteration++;
         }
