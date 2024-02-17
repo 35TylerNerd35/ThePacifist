@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TyeUtils;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,7 +24,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public static float gravity = -9.8f;
     [SerializeField] public static float jumpHeight = 2f;
 
+    [Header("Tween Stats")]
+    [SerializeField] float defaultFOV;
+    [SerializeField] float runFOV;
+    [SerializeField] float crouchRunFOV;
+    [SerializeField] float tweenTime;
+    float currentFOV;
+
     [Header("Booster Boots")]
+    [SerializeField] float dashFOV;
+    [SerializeField] float dashTweenTime;
     [SerializeField] float dashForce;
     [SerializeField] float dashTime;
     [SerializeField] float cooldownTime;
@@ -167,15 +177,42 @@ public class PlayerController : MonoBehaviour
 
     void SpeedHandler()
     {
+        float targetFOV;
         //Handle speed based on input
         if(crouch.ReadValue<float>() > 0 && run.ReadValue<float>() > 0)
+        {
             speed = runningCrouchSpeed;
+            targetFOV = crouchRunFOV;
+        }
         else if(crouch.ReadValue<float>() > 0)
+        {
             speed = crouchSpeed;
+            targetFOV = defaultFOV;
+        }
         else if(run.ReadValue<float>() > 0)
+        {
             speed = runSpeed;
+            targetFOV = runFOV;
+        }
         else
+        {
             speed = walkSpeed;
+            targetFOV = defaultFOV;
+        }
+
+        //Handle FOV tween
+        if(!dashFOV_)
+            FOVTween(tweenTime, targetFOV);
+    }
+
+    TweenUtils fovTweener = new();
+    void FOVTween(float time, float targetFOV)
+    {
+        if(currentFOV == targetFOV)
+            return;
+
+        currentFOV = targetFOV;
+        fovTweener.StartFloatTween(this, Camera.main.fieldOfView, targetFOV, (val) => { Camera.main.fieldOfView = val; }, time);
     }
 
     void JumpHandler()
@@ -190,6 +227,9 @@ public class PlayerController : MonoBehaviour
     {
         if(!canDash && !isDashing)
             return;
+
+        //Reset timer
+        dashTimer = 0;
 
         //Add velocity in direction of camera
         dashVel = Camera.main.transform.forward * dashForce;
@@ -214,10 +254,14 @@ public class PlayerController : MonoBehaviour
         velocity = Vector3.zero;
     }
 
+    bool dashFOV_;
     IEnumerator DashCooldown()
     {
         //Set as using stamina
         staminaBar.color = staminaUsingColor;
+
+        FOVTween(tweenTime, dashFOV);
+        dashFOV_ = true;
 
         //Ensure correct values
         isDashing = true;
@@ -229,6 +273,8 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         velocity = Vector3.zero;
         dashVel = Vector3.zero;
+        dashFOV_ = false;
+        Debug.Log("RETURN FOV");
 
         //Add momentum velocity for zero gravity
         if(gravity == 0)

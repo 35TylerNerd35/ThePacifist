@@ -11,10 +11,26 @@ namespace TyeUtils
         public bool isTweening;
         public float tweenProgress;
 
-        AnimationCurve defaultCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+        public AnimationCurve defaultCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
         Coroutine currentTweenCoroutine;
         Coroutine currentTweenCoroutine2;
         Coroutine currentTweenCoroutine3;
+
+        public void StartPositionTween(MonoBehaviour monoBehaviour, Vector3 initialValue, Vector3 targetValue, Action<Vector3> setProperty, float diameter ,float tweenTime = 1f, AnimationCurve tweenCurve = null)
+        {
+            // Stop tween if already tweening
+            if (currentTweenCoroutine != null) StopTween(monoBehaviour, currentTweenCoroutine);
+
+            // Establish default curve
+            if (tweenCurve == null) tweenCurve = defaultCurve;
+
+            //Check if any objects in way and set as target if so
+            RaycastHit hit;
+            if (Physics.SphereCast(initialValue, diameter/2, targetValue - initialValue, out hit, Mathf.Infinity))
+                targetValue = hit.point + ( hit.normal * diameter/2);
+
+            StartVector3Tween(monoBehaviour, initialValue, targetValue, setProperty, tweenTime, tweenCurve);
+        }
 
         public void StartFloatTween(MonoBehaviour monoBehaviour, float initialValue, float targetValue, Action<float> setProperty, float tweenTime = 1f, AnimationCurve tweenCurve = null)
         {
@@ -57,15 +73,14 @@ namespace TyeUtils
 
         void StopTween(MonoBehaviour monoBehaviour, Coroutine current)
         {
-            if (currentTweenCoroutine != null)
+            if (current != null)
             {
                 monoBehaviour.StopCoroutine(current);
-                currentTweenCoroutine = null;
                 isTweening = false;
             }
         }
 
-        IEnumerator FloatTweenCoroutine(float initialValue, float targetValue, Action<float> setProperty, float tweenTimeMax, AnimationCurve tweenCurve)
+        IEnumerator FloatTweenCoroutine(float initialValue, float targetVal, Action<float> setProperty, float tweenTimeMax, AnimationCurve tweenCurve)
         {
             isTweening = true;
             float elapsedTime = 0;
@@ -73,13 +88,14 @@ namespace TyeUtils
             while (elapsedTime < tweenTimeMax)
             {
                 tweenProgress = Mathf.Clamp01(elapsedTime / tweenTimeMax);
-                float currentValue = Mathf.Lerp(initialValue, targetValue, tweenCurve.Evaluate(tweenProgress));
+                float currentValue = Mathf.Lerp(initialValue, targetVal, tweenCurve.Evaluate(tweenProgress));
                 setProperty(currentValue);
 
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
+            setProperty(targetVal);
             isTweening = false;
             TweenFinished?.Invoke();
         }

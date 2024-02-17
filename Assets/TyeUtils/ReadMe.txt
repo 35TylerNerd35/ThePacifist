@@ -1,3 +1,5 @@
+using TyeUtils;
+
 #TweenUtils
 
     Initialise Instance of tweenUtils:
@@ -9,6 +11,7 @@
     Start Tween:
         tweenUtils.StartVector3Tween(this, [<Vector3> startVector], [<Vector3> endVector], [VectorUpdateMethod], [-OPTIONAL-<float> duration], [-OPTIONAL-<AnimationCurve> curve]);
         tweenUtils.StartFloatTween(this, [<float> startFloat], [<float> endFloat], [floatUpdateMethod], [-OPTIONAL-<float> duration], [-OPTIONAL-<AnimationCurve> curve]);
+        tweenUtils.StartPositionTween(this, [<float> startFloat], [<float> endFloat], [floatUpdateMethod], [<float> diameter] [-OPTIONAL-<float> duration], [-OPTIONAL-<AnimationCurve> curve]);
 
     UpdateMethods:
         You could either create a Function to handle it:
