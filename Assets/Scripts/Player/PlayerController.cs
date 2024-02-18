@@ -5,6 +5,23 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TyeUtils;
 
+public enum TweenVars{
+    Walking,
+    Run,
+    Crouch,
+    CrouchRun,
+    Dash
+}
+
+[System.Serializable]
+public struct speedStates{
+    public string stateName;
+    public float speed;
+    public float fovVal;
+    public float speedLineAlpha;
+    public Vector3 speedLineScale;
+}
+
 public class PlayerController : MonoBehaviour
 {
     public CharacterController charC;
@@ -17,22 +34,18 @@ public class PlayerController : MonoBehaviour
     InputAction dash;
 
     [Header("Movement Stats")]
-    [SerializeField] float walkSpeed = 5f;
-    [SerializeField] float runSpeed = 10f;
-    [SerializeField] float crouchSpeed = 3f;
-    [SerializeField] float runningCrouchSpeed = 6f;
     [SerializeField] public static float gravity = -9.8f;
     [SerializeField] public static float jumpHeight = 2f;
 
     [Header("Tween Stats")]
-    [SerializeField] float defaultFOV;
-    [SerializeField] float runFOV;
-    [SerializeField] float crouchRunFOV;
+    [SerializeField] Image speedLines;
     [SerializeField] float tweenTime;
+    [Tooltip("default, run, crouch, crouchRun, dash")]
+    [SerializeField] speedStates[] myStats;
+    
     float currentFOV;
 
     [Header("Booster Boots")]
-    [SerializeField] float dashFOV;
     [SerializeField] float dashTweenTime;
     [SerializeField] float dashForce;
     [SerializeField] float dashTime;
@@ -41,11 +54,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Color staminaUsingColor;
     [SerializeField] Image staminaBar;
 
-    Vector3 dashVel;
     bool canDash;
     bool isDashing;
-    float staminaDefaultWidth;
-    float dashTimer;
 
     float speed;
     Vector3 velocity;
@@ -66,7 +76,6 @@ public class PlayerController : MonoBehaviour
         gravity = -9.8f;
 
         canDash = true;
-        staminaDefaultWidth = staminaBar.rectTransform.rect.width;
     }
 
     void OnEnable()
@@ -114,7 +123,7 @@ public class PlayerController : MonoBehaviour
         charC.detectCollisions = true;
 
         //Set default move speed
-        speed = walkSpeed;
+        speed = myStats[(int)TweenVars.Walking].speed;
     }
 
     void Update()
@@ -131,7 +140,7 @@ public class PlayerController : MonoBehaviour
             //Reset Velocity
             if(velocity.y < 0)
                 velocity.y = -2f;
-                
+
             JumpHandler(); 
         }
 
@@ -164,42 +173,54 @@ public class PlayerController : MonoBehaviour
 
     void SpeedHandler()
     {
-        float targetFOV;
+        float[] targets = new float[3];
+
         //Handle speed based on input
         if(crouch.ReadValue<float>() > 0 && run.ReadValue<float>() > 0)
-        {
-            speed = runningCrouchSpeed;
-            targetFOV = crouchRunFOV;
-        }
+            targets = SetState(TweenVars.CrouchRun);
         else if(crouch.ReadValue<float>() > 0)
-        {
-            speed = crouchSpeed;
-            targetFOV = defaultFOV;
-        }
+            targets = SetState(TweenVars.Crouch);
         else if(run.ReadValue<float>() > 0)
-        {
-            speed = runSpeed;
-            targetFOV = runFOV;
-        }
+            targets = SetState(TweenVars.Run);
         else
-        {
-            speed = walkSpeed;
-            targetFOV = defaultFOV;
-        }
+            targets = SetState(TweenVars.Walking);
+
+        speed = targets[0];
+        float targetFOV = targets[1];
+        float targetAlpha = targets[2];
 
         //Handle FOV tween
         if(!isDashing)
-            FOVTween(tweenTime, targetFOV);
+            FOVTween(tweenTime, targetFOV, targetAlpha, targetScale);
+    }
+
+    Vector3 targetScale;
+    float[] SetState(TweenVars state)
+    {
+        float[] vals = new float[4];
+
+        vals[0] = myStats[(int)state].speed;
+        vals[1] = myStats[(int)state].fovVal;
+        vals[2] = myStats[(int)state].speedLineAlpha;
+        targetScale =  myStats[(int)state].speedLineScale;
+
+        return vals;
     }
 
     TweenUtils fovTweener = new();
-    void FOVTween(float time, float targetFOV)
+    TweenUtils alphaTweener = new();
+    TweenUtils scaleTweener = new();
+    void FOVTween(float time, float targetFOV, float targetSpeedLinesAlpha, Vector3 targetSpeedLinesScale)
     {
         if(currentFOV == targetFOV)
             return;
 
         currentFOV = targetFOV;
-        fovTweener.StartFloatTween(this, Camera.main.fieldOfView, targetFOV, (val) => { Camera.main.fieldOfView = val; }, time);
+        fovTweener.StartFloatTween(this, Camera.main.fieldOfView, targetFOV, val => Camera.main.fieldOfView = val, time);
+        alphaTweener.StartFloatTween(this, speedLines.color.a, targetSpeedLinesAlpha, val => speedLines.color = new Color(1, 1, 1, val), time);
+
+        scaleTweener.StartVector3Tween(this, speedLines.transform.localScale, targetSpeedLinesScale, val => speedLines.transform.localScale = val, time);
+        
     }
 
     void JumpHandler()
@@ -223,9 +244,14 @@ public class PlayerController : MonoBehaviour
         TweenUtils tweenUtils = new();
         Vector3 target = transform.position + (Camera.main.transform.forward * dashForce);
         tweenUtils.StartPositionTween(this, transform.position, target, val => transform.position = val, 1, dashTime);
-        FOVTween(tweenTime, dashFOV);
-        StartCoroutine(DashCooldown());
 
+        //Handle tweens
+        float[] targets =SetState(TweenVars.Dash);
+        float targetFOV = targets[1];
+        float targetAlpha = targets[2];
+        FOVTween(tweenTime, targetFOV, targetAlpha, targetScale);
+
+        StartCoroutine(DashCooldown());
     }
 
     IEnumerator DashCooldown()

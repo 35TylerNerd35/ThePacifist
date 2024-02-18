@@ -514,7 +514,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3000, y: 450}
+  m_AnchoredPosition: {x: -3000, y: 300}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &356592200039002812
@@ -538,6 +538,82 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &2278344174211109918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4167226474421272275}
+  - component: {fileID: 2839426679223030931}
+  - component: {fileID: 5342042837854194969}
+  m_Layer: 5
+  m_Name: SpeedLines
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4167226474421272275
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2278344174211109918}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.69, y: 0.69, z: 0.69}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5974499922754511067}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 2560, y: 1440}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2839426679223030931
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2278344174211109918}
+  m_CullTransparentMesh: 1
+--- !u!114 &5342042837854194969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2278344174211109918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: cdec3a833d077bb469744a94bfc38e8b, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2562373897047892704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,7 +1420,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 62.1
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 5
@@ -2037,6 +2113,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4167226474421272275}
   - {fileID: 4962776452286277066}
   - {fileID: 1358394066047666718}
   - {fileID: 7507725849638743035}
@@ -2152,7 +2229,7 @@ Transform:
   - {fileID: 326598864910314975}
   - {fileID: 5974499922754511067}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2614675097917902990
 CharacterController:
@@ -2237,13 +2314,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charC: {fileID: 2614675097917902990}
-  walkSpeed: 5
-  runSpeed: 10
-  crouchSpeed: 2
-  runningCrouchSpeed: 0
-  dashForce: 5
-  dashTime: 0.1
-  cooldownTime: 5
+  speedLines: {fileID: 5342042837854194969}
+  tweenTime: 0.5
+  myStats:
+  - stateName: Walking
+    speed: 5
+    fovVal: 60
+    speedLineAlpha: 0
+    speedLineScale: {x: 0.69, y: 0.69, z: 0.69}
+  - stateName: Running
+    speed: 10
+    fovVal: 75
+    speedLineAlpha: 0.4
+    speedLineScale: {x: 0.72, y: 0.72, z: 0.72}
+  - stateName: Crouching
+    speed: 2
+    fovVal: 60
+    speedLineAlpha: 0
+    speedLineScale: {x: 0.69, y: 0.69, z: 0.69}
+  - stateName: Crouch Running
+    speed: 3
+    fovVal: 65
+    speedLineAlpha: 0.2
+    speedLineScale: {x: 0.69, y: 0.69, z: 0.69}
+  - stateName: Dashing
+    speed: 0
+    fovVal: 110
+    speedLineAlpha: 0.65
+    speedLineScale: {x: 0.81, y: 0.81, z: 0.81}
+  dashTweenTime: 0.3
+  dashForce: 20
+  dashTime: 0.5
+  cooldownTime: 2
   staminaDefaultColor: {r: 0, g: 1, b: 0.9254902, a: 1}
   staminaUsingColor: {r: 0, g: 0.33962262, b: 0.31403464, a: 1}
   staminaBar: {fileID: 6035580708189298728}
