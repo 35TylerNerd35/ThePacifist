@@ -128,37 +128,24 @@ public class PlayerController : MonoBehaviour
 
         if(isGrounded)
         {
+            //Reset Velocity
             if(velocity.y < 0)
-            {
-                //Reset velocity
                 velocity.y = -2f;
-            }
+                
             JumpHandler(); 
         }
 
         //<-- Crouching -->
         if(crouch.ReadValue<float>() > 0)
-        {
             charC.height = .9f;
-        }
         else if(charC.height != 1.8f)
-        {
             charC.height = 1.8f;
-        }
 
         //<-- Dashing -->
         if(dash.ReadValue<float>() > 0)
-        {
-            DashHandler();
-        }
-        if(!canDash && !isDashing)
-        {
-            DashCooldownHandler();
-        }
+            NewDash();
         if(isPlayerFloating)
-        {
             DashFloatHandler();
-        }
 
         //<-- Movement -->
         SpeedHandler();
@@ -201,7 +188,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Handle FOV tween
-        if(!dashFOV_)
+        if(!isDashing)
             FOVTween(tweenTime, targetFOV);
     }
 
@@ -223,25 +210,43 @@ public class PlayerController : MonoBehaviour
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * -9.8f);
     }
 
-    void DashHandler()
+    void NewDash()
     {
-        if(!canDash && !isDashing)
+        if(isDashing)
+            return;
+        if(!canDash)
             return;
 
-        //Reset timer
-        dashTimer = 0;
+        isDashing = true;
+        canDash = false;
 
-        //Add velocity in direction of camera
-        dashVel = Camera.main.transform.forward * dashForce;
-        velocity += dashVel;
+        TweenUtils tweenUtils = new();
+        Vector3 target = transform.position + (Camera.main.transform.forward * dashForce);
+        tweenUtils.StartPositionTween(this, transform.position, target, val => transform.position = val, 1, dashTime);
+        FOVTween(tweenTime, dashFOV);
         StartCoroutine(DashCooldown());
+
     }
 
-    void DashCooldownHandler()
+    IEnumerator DashCooldown()
     {
-        //Set width of stamina bar depending on cooldown time
-        dashTimer += Time.deltaTime;
-        staminaBar.rectTransform.sizeDelta = new Vector2(staminaDefaultWidth/cooldownTime * dashTimer, staminaBar.rectTransform.rect.height);    
+        staminaBar.color = staminaUsingColor;
+        yield return new WaitForSeconds(dashTime);
+        isDashing = false;
+        
+        //Reset values
+        staminaBar.color = staminaDefaultColor;
+
+        if(gravity == 0)
+        {
+            velocity = Camera.main.transform.forward * (dashForce/3f);
+            isPlayerFloating = true;
+        }
+        
+        //Cooldown until new dash
+        TweenUtils myTweener = new();
+        myTweener.StartFloatTween(this, 0, 1, (val) => staminaBar.transform.localScale  = new Vector2(val, 1), cooldownTime);
+        myTweener.TweenFinished  += () => canDash = true;
     }
 
     void DashFloatHandler()
@@ -252,40 +257,5 @@ public class PlayerController : MonoBehaviour
         //Handle additional velocity from dashing in zero gravity
         isPlayerFloating = false;
         velocity = Vector3.zero;
-    }
-
-    bool dashFOV_;
-    IEnumerator DashCooldown()
-    {
-        //Set as using stamina
-        staminaBar.color = staminaUsingColor;
-
-        FOVTween(tweenTime, dashFOV);
-        dashFOV_ = true;
-
-        //Ensure correct values
-        isDashing = true;
-        canDash = false;
-        yield return new WaitForSeconds(dashTime);
-        
-        //Reset values
-        staminaBar.color = staminaDefaultColor;
-        isDashing = false;
-        velocity = Vector3.zero;
-        dashVel = Vector3.zero;
-        dashFOV_ = false;
-        Debug.Log("RETURN FOV");
-
-        //Add momentum velocity for zero gravity
-        if(gravity == 0)
-        {
-            velocity = Camera.main.transform.forward * (dashForce/3f);
-            isPlayerFloating = true;
-        }
-
-        //Full reset after cooldown
-        yield return new WaitForSeconds(cooldownTime);
-        dashTimer = 0;
-        canDash = true;
     }
 }

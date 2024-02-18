@@ -24,10 +24,9 @@ namespace TyeUtils
             // Establish default curve
             if (tweenCurve == null) tweenCurve = defaultCurve;
 
-            //Check if any objects in way and set as target if so
             RaycastHit hit;
-            if (Physics.SphereCast(initialValue, diameter/2, targetValue - initialValue, out hit, Mathf.Infinity))
-                targetValue = hit.point + ( hit.normal * diameter/2);
+            if (Physics.Raycast(initialValue, targetValue - initialValue, out hit, Vector3.Distance(initialValue, targetValue)))
+                targetValue = hit.point +( hit.normal * diameter/2);
 
             StartVector3Tween(monoBehaviour, initialValue, targetValue, setProperty, tweenTime, tweenCurve);
         }
