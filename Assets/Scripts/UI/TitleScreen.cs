@@ -12,8 +12,26 @@ public class TitleScreen : MonoBehaviour
     [Header("Title Anim")]
     [SerializeField] Transform titleObj;
     [SerializeField] Animator promptAnim;
+    [Space]
+    [SerializeField] Button continueButton;
 
     void Awake() => Cursor.lockState = CursorLockMode.None;
+
+    void Start()
+    {
+        int playerSave = PlayerPrefs.GetInt("SaveIndex", 0);
+
+        if(playerSave == 0)
+        {
+            continueButton.interactable = false;
+        }
+    }
+
+    public void StartNewGame()
+    {
+        PlayerPrefs.SetInt("SaveIndex", 0);
+        StartGame();
+    }
 
     public void StartGame() => StartCoroutine(LoadSceneAsync(1));
 

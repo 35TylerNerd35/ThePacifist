@@ -555,7 +555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4167226474421272275
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2315,7 +2315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charC: {fileID: 2614675097917902990}
   speedLines: {fileID: 5342042837854194969}
-  tweenTime: 0.5
+  tweenTime: 0.4
   myStats:
   - stateName: Walking
     speed: 5

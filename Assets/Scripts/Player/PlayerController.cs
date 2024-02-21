@@ -42,6 +42,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float tweenTime;
     [Tooltip("default, run, crouch, crouchRun, dash")]
     [SerializeField] speedStates[] myStats;
+
+    TweenUtils fovTweener = new();
+    TweenUtils alphaTweener = new();
+    TweenUtils scaleTweener = new();
     
     float currentFOV;
 
@@ -153,8 +157,8 @@ public class PlayerController : MonoBehaviour
         //<-- Dashing -->
         if(dash.ReadValue<float>() > 0)
             NewDash();
-        if(isPlayerFloating)
-            DashFloatHandler();
+        // if(isPlayerFloating)
+        //     DashFloatHandler();
 
         //<-- Movement -->
         SpeedHandler();
@@ -207,9 +211,6 @@ public class PlayerController : MonoBehaviour
         return vals;
     }
 
-    TweenUtils fovTweener = new();
-    TweenUtils alphaTweener = new();
-    TweenUtils scaleTweener = new();
     void FOVTween(float time, float targetFOV, float targetSpeedLinesAlpha, Vector3 targetSpeedLinesScale)
     {
         if(currentFOV == targetFOV)
