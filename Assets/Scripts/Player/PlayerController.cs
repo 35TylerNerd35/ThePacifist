@@ -20,6 +20,7 @@ public struct speedStates{
     public float fovVal;
     public float speedLineAlpha;
     public Vector3 speedLineScale;
+    public AnimationClip headBob;
 }
 
 public class PlayerController : MonoBehaviour
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Stats")]
     [SerializeField] public static float gravity = -9.8f;
     [SerializeField] public static float jumpHeight = 2f;
+    [Space]
+    [SerializeField] float headBob;
 
     [Header("Tween Stats")]
     [SerializeField] Image speedLines;
@@ -207,6 +210,11 @@ public class PlayerController : MonoBehaviour
         vals[1] = myStats[(int)state].fovVal;
         vals[2] = myStats[(int)state].speedLineAlpha;
         targetScale =  myStats[(int)state].speedLineScale;
+
+        if(myStats[(int)state].headBob != null && move.ReadValue<Vector2>().y > 0)
+            Camera.main.gameObject.GetComponent<Animator>().Play(myStats[(int)state].headBob.name);
+        else
+            Camera.main.gameObject.GetComponent<Animator>().Play("[EMPTY]");
 
         return vals;
     }
