@@ -13,8 +13,15 @@ public class DevConsole : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Slash) && !isConsoleOpen)
         {
             isConsoleOpen = true;
-            consoleContainer.SetActive(true);
-            consoleContainerBack.SetActive(true);
+            consoleContainer.GetComponent<Animator>().Play("In");
+            Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    public void Close()
+    {
+        isConsoleOpen = false;
+        consoleContainer.GetComponent<Animator>().Play("Out");
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

@@ -17,6 +17,7 @@ public class ControlCenter : MonoBehaviour
     InputAction submit;
     InputAction backspace;
     InputAction caretMovement;
+    InputAction close;
 
     [Header("Commands")]
     [SerializeField] string[] commands;
@@ -66,6 +67,9 @@ public class ControlCenter : MonoBehaviour
 
         caretMovement = inputController.ConsoleInputs.CaretMovement;
         caretMovement.Enable();
+
+        close = inputController.MenuInputs.Close;
+        close.Enable();
     }
     void OnDisable()
     {
@@ -75,6 +79,7 @@ public class ControlCenter : MonoBehaviour
         submit.Disable();
         backspace.Disable();
         caretMovement.Disable();
+        close.Disable();
 
         //Disable the entire controller
         inputController.Disable();
@@ -85,6 +90,11 @@ public class ControlCenter : MonoBehaviour
     {
         InputHandler();
         CaretHandler();
+
+        if(close.ReadValue<float>() != 0)
+        {
+            ConsoleQuit();
+        }
     }
 
 //---------------------Main---------------------\\
@@ -324,6 +334,7 @@ public class ControlCenter : MonoBehaviour
         }
     }
 
+    
     void ConsoleGrav()
     {
         //Add state of gravity to log (same line)

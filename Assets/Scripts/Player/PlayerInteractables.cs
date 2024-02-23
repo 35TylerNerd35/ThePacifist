@@ -56,7 +56,6 @@ public class PlayerInteractables : MonoBehaviour
                 //Enable prompt
                 if(lastPrompt == null)
                 {
-                    
                     lastPrompt = hit.transform.GetChild(0).gameObject;
                     lastPrompt.SetActive(true);
                 }

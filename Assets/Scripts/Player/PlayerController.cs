@@ -160,8 +160,8 @@ public class PlayerController : MonoBehaviour
         //<-- Dashing -->
         if(dash.ReadValue<float>() > 0)
             NewDash();
-        // if(isPlayerFloating)
-        //     DashFloatHandler();
+        if(isPlayerFloating)
+            DashFloatHandler();
 
         //<-- Movement -->
         SpeedHandler();
@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
         vals[2] = myStats[(int)state].speedLineAlpha;
         targetScale =  myStats[(int)state].speedLineScale;
 
-        if(myStats[(int)state].headBob != null && move.ReadValue<Vector2>().y > 0)
+        if(myStats[(int)state].headBob != null && move.ReadValue<Vector2>().y != 0)
             Camera.main.gameObject.GetComponent<Animator>().Play(myStats[(int)state].headBob.name);
         else
             Camera.main.gameObject.GetComponent<Animator>().Play("[EMPTY]");
@@ -286,8 +286,8 @@ public class PlayerController : MonoBehaviour
 
     void DashFloatHandler()
     {
-        if(gravity == 0)
-            return;
+        // if(gravity == 0)
+        //     return;
 
         //Handle additional velocity from dashing in zero gravity
         isPlayerFloating = false;

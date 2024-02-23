@@ -7,7 +7,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField]int saveIndex;
     [SerializeField]SavePointScriptable[] savePoints;
 
-    void OnEnable()
+    void Awake()
     {
         //Grab save index
         saveIndex = PlayerPrefs.GetInt("SaveIndex", 0);
@@ -24,8 +24,15 @@ public class PlayerSpawner : MonoBehaviour
         //Set player to pos
         transform.position = playerSpawnPos;
         transform.rotation = playerRot;
+        
+
+        MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
+        foreach(MonoBehaviour script in scripts)
+        {
+            script.enabled = true;
+        }
 
         //Destroy self
-        Destroy(this);
+        // Destroy(this);
     }
 }

@@ -19,6 +19,8 @@ public class GravityCmd : MonoBehaviour
 
             //Stop gravity randomiser
             isGravOn = false;
+
+            Camera.main.GetComponent<Animator>().enabled = true;
         }
         else
         {
@@ -27,6 +29,7 @@ public class GravityCmd : MonoBehaviour
             PlayerController.gravity = 0;
             PlayerController.jumpHeight = .5f;
 
+            Camera.main.GetComponent<Animator>().enabled = false;
         }
     }
 }

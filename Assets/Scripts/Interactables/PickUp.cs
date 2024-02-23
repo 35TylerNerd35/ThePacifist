@@ -76,6 +76,7 @@ public class PickUp : MonoBehaviour, IInteract
 
             //Prevent collisions with player
             player = GameObject.FindGameObjectWithTag("Player");     
+            Physics.IgnoreCollision(player.GetComponent<Collider>(), GetComponent<Collider>(), true);
         }
     }
 

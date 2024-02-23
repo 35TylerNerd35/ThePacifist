@@ -18,11 +18,15 @@ public class NewSit : MonoBehaviour, IInteract
     Vector3 previousPlayerCamPos;
     Vector3 previousPlayerCamRot;
 
+    GameObject pauseMenu;
+
     void Awake()
     {
         playerCam = Camera.main.transform;
         player = GameObject.FindWithTag("Player").transform;
-    }
+
+        pauseMenu = GameObject.FindWithTag("PauseParent");
+    }   
 
     void OnEnable() => UIObj.SetActive(false);
 
@@ -32,6 +36,8 @@ public class NewSit : MonoBehaviour, IInteract
         player.GetComponent<PlayerController>().enabled = false;
         player.GetComponent<CharacterController>().enabled = false;
         player.GetComponent<CameraController>().enabled = false;
+
+        pauseMenu.SetActive(false);
 
         player.GetChild(1).gameObject.SetActive(false);
 
@@ -88,6 +94,7 @@ public class NewSit : MonoBehaviour, IInteract
         player.GetComponent<CameraController>().enabled = true;
 
         player.GetChild(1).gameObject.SetActive(true);
+        pauseMenu.SetActive(true);
 
         //Enable camera children
         foreach(Transform child in playerCam)

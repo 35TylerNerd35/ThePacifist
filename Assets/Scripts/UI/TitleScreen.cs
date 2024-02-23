@@ -46,7 +46,6 @@ public class TitleScreen : MonoBehaviour
 
         while(!operation.isDone)
         {
-            Debug.Log(operation.progress);
             float progressTime = initScaleX * operation.progress;
             loadBar.transform.localScale = new Vector3(progressTime, loadBar.transform.localScale.y, loadBar.transform.localScale.z);
 
