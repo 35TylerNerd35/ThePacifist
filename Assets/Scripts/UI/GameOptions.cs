@@ -13,6 +13,15 @@ public class GameOptions : MonoBehaviour
     [SerializeField] Color indicatorColorOriginal;
     [SerializeField] Color indicatorColorSelected;
     [SerializeField] Image[] indicators;
+    [Header("Values")]
+    [SerializeField] Toggle fullscreenToggle;
+
+    void Awake()
+    {
+        bool temp = PlayerPrefs.GetInt("isFullscreen", 1) == 1;
+        fullscreenToggle.isOn = temp;
+        fullscreenToggle.onValueChanged.AddListener(FullScreenController);
+    }
 
     void OnEnable()
     {
@@ -48,5 +57,12 @@ public class GameOptions : MonoBehaviour
         //Display selected tab
         tabs[activateTab].SetActive(true); 
         indicators[activateTab].color = indicatorColorSelected;
+    }
+
+    public void FullScreenController(bool toggleVal)
+    {
+        Screen.fullScreen = toggleVal;
+        PlayerPrefs.SetInt("isFullScreen", toggleVal ? 1 : 0);
+        PlayerPrefs.Save();
     }
 }
