@@ -11,13 +11,7 @@ public class ControlCenter : MonoBehaviour
     [SerializeField] bool isOldConsole = true;
 
     //Input
-    public BaseInputController inputController;
-    InputAction selectAll;
-    InputAction unselect;
-    InputAction submit;
-    InputAction backspace;
-    InputAction caretMovement;
-    InputAction close;
+    PlayerInput playerInput;
 
     [Header("Commands")]
     [SerializeField] string[] commands;
@@ -44,45 +38,7 @@ public class ControlCenter : MonoBehaviour
 //---------------------Inputs---------------------\\
     void Awake()
     {
-        //Init new input system instance
-        inputController = new BaseInputController();
-    }
-    void OnEnable()
-    {
-        //Enable controller
-        inputController.Enable();
-
-        //Enable input actions
-        unselect = inputController.ConsoleInputs.Unselect;
-        unselect.Enable();
-
-        selectAll = inputController.ConsoleInputs.SelectAll;
-        selectAll.Enable();
-
-        submit = inputController.ConsoleInputs.Submit;
-        submit.Enable();
-
-        backspace = inputController.ConsoleInputs.Backspace;
-        backspace.Enable();
-
-        caretMovement = inputController.ConsoleInputs.CaretMovement;
-        caretMovement.Enable();
-
-        close = inputController.MenuInputs.Close;
-        close.Enable();
-    }
-    void OnDisable()
-    {
-        //Disable inputs
-        selectAll.Disable();
-        unselect.Disable();
-        submit.Disable();
-        backspace.Disable();
-        caretMovement.Disable();
-        close.Disable();
-
-        //Disable the entire controller
-        inputController.Disable();
+        playerInput = GetComponent<PlayerInput>();
     }
 
 //---------------------Run Functions---------------------\\
@@ -91,7 +47,7 @@ public class ControlCenter : MonoBehaviour
         InputHandler();
         CaretHandler();
 
-        if(close.ReadValue<float>() != 0)
+        if(playerInput.actions["Close"].ReadValue<float>() != 0)
         {
             ConsoleQuit();
         }
@@ -134,20 +90,20 @@ public class ControlCenter : MonoBehaviour
 
     void InputHandler()
     {
-        if(selectAll.ReadValue<float>() != 0)
+        if(playerInput.actions["SelectAll"].ReadValue<float>() != 0)
         {
             SelectAll(true);
         }
-        else if(unselect.ReadValue<float>() != 0 && isAllSelected)
+        else if(playerInput.actions["Unselect"].ReadValue<float>() != 0 && isAllSelected)
         {
             SelectAll(false);
         }
-        else if(submit.ReadValue<float>() != 0)
+        else if(playerInput.actions["Submit"].ReadValue<float>() != 0)
         {
             SubmitText(inputText.text, logLines, inputLog, 6);
             SelectAll(false);
         }
-        else if(backspace.ReadValue<float>() != 0 && caretPos > 0)
+        else if(playerInput.actions["Backspace"].ReadValue<float>() != 0 && caretPos > 0)
         {
             if(!isAllSelected)
             {
@@ -167,9 +123,9 @@ public class ControlCenter : MonoBehaviour
                 SelectAll(false);
             }            
         }
-        else if(caretMovement.ReadValue<float>() != 0)
+        else if(playerInput.actions["CaretMovement"].ReadValue<float>() != 0)
         {
-            float moveDir = caretMovement.ReadValue<float>();
+            float moveDir = playerInput.actions["CaretMovement"].ReadValue<float>();
             if(isAllSelected)
             {
                 //Place caret at start or end of text

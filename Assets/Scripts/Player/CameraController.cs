@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
     public BaseInputController inputController;
+    PlayerInput playerInput;
     InputAction look;
 
     [Header("Stats")]
@@ -27,8 +28,7 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
-        //Init new input system instance
-        inputController = new BaseInputController();
+        playerInput = GetComponent<PlayerInput>();
     }
 
     void Start()
@@ -41,28 +41,9 @@ public class CameraController : MonoBehaviour
         // UpdateSens();
     }
 
-    void OnEnable()
-    {
-        //Enable controller
-        inputController.Enable();
-
-        //Enable input actions
-        look = inputController.PlayerInputs.Look;
-        look.Enable();
-    }
-
-    void OnDisable()
-    {
-        //Disable inputs
-        look.Disable();
-
-        //Disable the entire controller
-        inputController.Disable();
-    }
-
     void Update()
     {
-        Vector2 lookController = look.ReadValue<Vector2>();
+        Vector2 lookController = playerInput.actions["Look"].ReadValue<Vector2>();
 
         //Rotate player body
         playerBody.Rotate(Vector3.up * lookController.x * sensitivity.x);;

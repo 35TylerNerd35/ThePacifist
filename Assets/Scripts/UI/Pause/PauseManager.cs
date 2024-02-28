@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class PauseManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
 
+        //Disable player input
+        Object[] inputs = FindObjectsOfType(typeof(PlayerInput));
+        foreach(PlayerInput input in inputs)
+            input.enabled = false;
+
         if(hud == null)
             return;
         
@@ -28,6 +34,11 @@ public class PauseManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
+
+        //Re-enable player input
+        Object[] inputs = FindObjectsOfType(typeof(PlayerInput));
+        foreach(PlayerInput input in inputs)
+            input.enabled = true;
 
         if(hud == null)
             return;

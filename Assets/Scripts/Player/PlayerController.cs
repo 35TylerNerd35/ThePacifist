@@ -26,13 +26,8 @@ public struct speedStates{
 public class PlayerController : MonoBehaviour
 {
     public CharacterController charC;
-    public BaseInputController inputController;
-    InputAction move;
-    InputAction jump;
-    InputAction run;
-    InputAction crouch;
-    InputAction interact;
-    InputAction dash;
+
+    PlayerInput playerInput;
 
     [Header("Movement Stats")]
     [SerializeField] public static float gravity = -9.8f;
@@ -76,51 +71,12 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        //Init new input controller instance
-        inputController = new BaseInputController();
+        playerInput = GetComponent<PlayerInput>();
 
         //Ensure normal gravity on game start
         gravity = -9.8f;
 
         canDash = true;
-    }
-
-    void OnEnable()
-    {
-        //Enable controller
-        inputController.Enable();
-
-        //Enable input actions
-        move = inputController.PlayerInputs.Move;
-        move.Enable();
-
-        jump = inputController.PlayerInputs.Jump;
-        jump.Enable();
-
-        run = inputController.PlayerInputs.Run;
-        run.Enable();
-
-        crouch = inputController.PlayerInputs.Crouch;
-        crouch.Enable();
-
-        interact = inputController.PlayerInputs.Interact;
-        interact.Enable();
-        
-        dash = inputController.PlayerInputs.Dash;
-        dash.Enable();
-    }
-
-    void OnDisable()
-    {
-        //Disable inputs
-        move.Disable();
-        jump.Disable();
-        run.Disable();
-        crouch.Disable();
-        dash.Disable();
-
-        //Disable the entire controller
-        inputController.Disable();
     }
 
 
@@ -152,13 +108,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //<-- Crouching -->
-        if(crouch.ReadValue<float>() > 0)
+        if(playerInput.actions["Crouch"].ReadValue<float>() > 0)
             charC.height = .9f;
         else if(charC.height != 1.8f)
             charC.height = 1.8f;
 
         //<-- Dashing -->
-        if(dash.ReadValue<float>() > 0)
+        if(playerInput.actions["Dash"].ReadValue<float>() > 0)
             NewDash();
         if(isPlayerFloating)
             DashFloatHandler();
@@ -171,7 +127,7 @@ public class PlayerController : MonoBehaviour
     void MovementHandler()
     {
         //Grab value of movement input
-        Vector2 movement = move.ReadValue<Vector2>();
+        Vector2 movement = playerInput.actions["Move"].ReadValue<Vector2>();
         
         //Move character
         Vector3 moveVector  = transform.right * movement.x + transform.forward * movement.y;
@@ -183,11 +139,11 @@ public class PlayerController : MonoBehaviour
         float[] targets = new float[3];
 
         //Handle speed based on input
-        if(crouch.ReadValue<float>() > 0 && run.ReadValue<float>() > 0)
+        if(playerInput.actions["Crouch"].ReadValue<float>() > 0 && playerInput.actions["Run"].ReadValue<float>() > 0)
             targets = SetState(TweenVars.CrouchRun);
-        else if(crouch.ReadValue<float>() > 0)
+        else if(playerInput.actions["Crouch"].ReadValue<float>() > 0)
             targets = SetState(TweenVars.Crouch);
-        else if(run.ReadValue<float>() > 0)
+        else if(playerInput.actions["Run"].ReadValue<float>() > 0)
             targets = SetState(TweenVars.Run);
         else
             targets = SetState(TweenVars.Walking);
@@ -211,7 +167,7 @@ public class PlayerController : MonoBehaviour
         vals[2] = myStats[(int)state].speedLineAlpha;
         targetScale =  myStats[(int)state].speedLineScale;
 
-        if(myStats[(int)state].headBob != null && move.ReadValue<Vector2>().y != 0)
+        if(myStats[(int)state].headBob != null && playerInput.actions["Move"].ReadValue<Vector2>().y != 0)
             Camera.main.gameObject.GetComponent<Animator>().Play(myStats[(int)state].headBob.name);
         else
             Camera.main.gameObject.GetComponent<Animator>().Play("[EMPTY]");
@@ -234,7 +190,7 @@ public class PlayerController : MonoBehaviour
 
     void JumpHandler()
     {
-        if(jump.ReadValue<float>() == 0)
+        if(playerInput.actions["Jump"].ReadValue<float>() == 0)
             return;
 
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * -9.8f);

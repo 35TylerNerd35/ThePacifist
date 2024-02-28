@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 2945130961778535785}
   - component: {fileID: 7042846243633982356}
   - component: {fileID: 216580753859664324}
+  - component: {fileID: 6402336756224970988}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -141,6 +142,36 @@ MonoBehaviour:
   teleportActivationTime: 3
   teleportDelayTime: 5
   teleportCooldownTime: 10
+--- !u!114 &6402336756224970988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674847486149775548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 575574e7767094a40b849502b924bc8a, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: PlayerInputs
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &727098638683362281
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,7 +722,7 @@ Transform:
   - {fileID: 7462136249540339223}
   - {fileID: 8762661593520209324}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5613295830672062167
 BoxCollider:

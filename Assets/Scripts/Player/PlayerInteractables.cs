@@ -7,8 +7,7 @@ public class PlayerInteractables : MonoBehaviour
 {
     public static bool isNotInteractableGlobal;
 
-    public BaseInputController inputController;
-    InputAction interact;
+    PlayerInput playerInput;
 
     [SerializeField] float range = 2f;
     [SerializeField] LayerMask interactionMask;
@@ -18,32 +17,13 @@ public class PlayerInteractables : MonoBehaviour
 
     void Awake()
     {
-        inputController = new BaseInputController();
-    }
-
-    void OnEnable()
-    {
-        //Enable controller
-        inputController.Enable();
-
-        //Enable input actions
-        interact = inputController.PlayerInputs.Interact;
-        interact.Enable();
-    }
-
-    void OnDisable()
-    {
-        //Disable inputs
-        interact.Disable();
-
-        //Disable the entire controller
-        inputController.Disable();
+        playerInput = GetComponent<PlayerInput>();
     }
 
     void Update()
     {
         //Grab interact input
-        float interactVal = interact.ReadValue<float>();
+        float interactVal = playerInput.actions["Interact"].ReadValue<float>();
 
         //Check if player is close
         RaycastHit hit;
