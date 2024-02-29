@@ -20,7 +20,6 @@ public class DeactivateObj : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.transform.parent.gameObject.SetActive(false);
-        Debug.Log("TEST");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

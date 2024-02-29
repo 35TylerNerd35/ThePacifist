@@ -8,7 +8,6 @@ enum CommandState { GravSwitch, move, fall, jump }
 public class ControlCenter : MonoBehaviour
 {
     public static bool _isPlayerAdmin;
-    [SerializeField] bool isOldConsole = true;
 
     //Input
     PlayerInput playerInput;
@@ -273,12 +272,7 @@ public class ControlCenter : MonoBehaviour
 
     void ConsoleQuit()
     {
-        if(isOldConsole)
-            sitScript.isClosing = true;
-        else
-        {
-            transform.parent.GetComponent<NewSit>().CloseConsole();
-        }
+        transform.parent.GetComponent<NewSit>().CloseConsole();
     }
 
     void ConsoleHelp()

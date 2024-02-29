@@ -6,9 +6,7 @@ using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
-    public BaseInputController inputController;
     PlayerInput playerInput;
-    InputAction look;
 
     [Header("Stats")]
     [SerializeField] Vector2 defaultSensitivity;

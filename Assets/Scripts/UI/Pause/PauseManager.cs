@@ -23,11 +23,14 @@ public class PauseManager : MonoBehaviour
         foreach(PlayerInput input in inputs)
             input.enabled = false;
 
+        //Ensure pause still works
+        transform.parent.GetComponent<PlayerInput>().enabled = true;
+
         if(hud == null)
             return;
         
         hud.SetActive(false);
-        mainCam.parent.GetComponent<CameraController>().enabled = false;
+        // mainCam.parent.GetComponent<CameraController>().enabled = false;
     }
 
     void OnDisable()
@@ -44,6 +47,6 @@ public class PauseManager : MonoBehaviour
             return;
 
         hud.SetActive(true);
-        mainCam.parent.GetComponent<CameraController>().enabled = true;
+        // mainCam.parent.GetComponent<CameraController>().enabled = true;
     }
 }

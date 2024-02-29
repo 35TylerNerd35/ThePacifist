@@ -39,9 +39,7 @@ public class GameOptions : MonoBehaviour
 
     IEnumerator DisableOptions()
     {
-        Debug.Log("WAIT");
         yield return new WaitForSeconds(1f);
-        Debug.Log("DE");
         gameObject.SetActive(false);
     }
     
