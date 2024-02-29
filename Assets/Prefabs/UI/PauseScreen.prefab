@@ -751,7 +751,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1603,6 +1603,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3796836795764192077, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796836795764192077, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796836795764192077, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 5215982101270637005}
+    - target: {fileID: 3796836795764192077, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796836795764192077, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Save
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796836795764192077, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: RebindSaveLoad, Unity.InputSystem.RebindingUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796836795764192077, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4874324069931995411, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
       propertyPath: m_Name
       value: newOptionsScreen
@@ -1610,6 +1638,10 @@ PrefabInstance:
     - target: {fileID: 4874324069931995411, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5363837297264103946, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
+      propertyPath: isGameScene
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1621,6 +1653,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4874324069931995411, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
   m_PrefabInstance: {fileID: 8966926701201063068}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5215982101270637005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3752070538928182609, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
+  m_PrefabInstance: {fileID: 8966926701201063068}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4599863768294567311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6c2da2db9374dada6761b5e35121c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7773828247913972838 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1698635281516902650, guid: 4727a4ae83a8bdb44af24aee0a35ffa5, type: 3}
