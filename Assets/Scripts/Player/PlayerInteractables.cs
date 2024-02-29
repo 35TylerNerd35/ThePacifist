@@ -20,6 +20,8 @@ public class PlayerInteractables : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
     }
 
+    public bool canPickUpItems;
+
     void Update()
     {
         //Grab interact input

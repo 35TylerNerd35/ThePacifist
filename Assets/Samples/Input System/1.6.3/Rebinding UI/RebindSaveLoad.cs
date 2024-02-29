@@ -16,7 +16,6 @@ public class RebindSaveLoad : MonoBehaviour
     {
         var rebinds = actions.SaveBindingOverridesAsJson();
         PlayerPrefs.SetString("rebinds", rebinds);
-        Debug.Log("NEW INPUTS");
     }
 
     public void OnDisable()
