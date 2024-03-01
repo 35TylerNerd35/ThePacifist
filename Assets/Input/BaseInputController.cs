@@ -98,6 +98,15 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Tap(duration=0.005)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TestAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""e38030cd-3e75-4815-ae27-6f37e1369cad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -373,6 +382,17 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""38a9c62f-3f66-42f0-8ec7-f020210b0b53"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TestAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -891,6 +911,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
         m_PlayerInputs_Attack = m_PlayerInputs.FindAction("Attack", throwIfNotFound: true);
         m_PlayerInputs_Interact = m_PlayerInputs.FindAction("Interact", throwIfNotFound: true);
         m_PlayerInputs_Dash = m_PlayerInputs.FindAction("Dash", throwIfNotFound: true);
+        m_PlayerInputs_TestAction = m_PlayerInputs.FindAction("TestAction", throwIfNotFound: true);
         // MenuInputs
         m_MenuInputs = asset.FindActionMap("MenuInputs", throwIfNotFound: true);
         m_MenuInputs_Close = m_MenuInputs.FindAction("Close", throwIfNotFound: true);
@@ -975,6 +996,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInputs_Attack;
     private readonly InputAction m_PlayerInputs_Interact;
     private readonly InputAction m_PlayerInputs_Dash;
+    private readonly InputAction m_PlayerInputs_TestAction;
     public struct PlayerInputsActions
     {
         private @BaseInputController m_Wrapper;
@@ -987,6 +1009,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_PlayerInputs_Attack;
         public InputAction @Interact => m_Wrapper.m_PlayerInputs_Interact;
         public InputAction @Dash => m_Wrapper.m_PlayerInputs_Dash;
+        public InputAction @TestAction => m_Wrapper.m_PlayerInputs_TestAction;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1020,6 +1043,9 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @TestAction.started += instance.OnTestAction;
+            @TestAction.performed += instance.OnTestAction;
+            @TestAction.canceled += instance.OnTestAction;
         }
 
         private void UnregisterCallbacks(IPlayerInputsActions instance)
@@ -1048,6 +1074,9 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @TestAction.started -= instance.OnTestAction;
+            @TestAction.performed -= instance.OnTestAction;
+            @TestAction.canceled -= instance.OnTestAction;
         }
 
         public void RemoveCallbacks(IPlayerInputsActions instance)
@@ -1239,6 +1268,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnTestAction(InputAction.CallbackContext context);
     }
     public interface IMenuInputsActions
     {

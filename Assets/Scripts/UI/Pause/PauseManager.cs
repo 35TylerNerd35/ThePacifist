@@ -6,12 +6,6 @@ using UnityEngine.InputSystem;
 public class PauseManager : MonoBehaviour
 {
     [SerializeField] GameObject hud;
-    Transform mainCam;
-
-    void Awake()
-    {
-        mainCam = Camera.main.transform;
-    }
 
     void OnEnable()
     {
@@ -30,7 +24,6 @@ public class PauseManager : MonoBehaviour
             return;
         
         hud.SetActive(false);
-        // mainCam.parent.GetComponent<CameraController>().enabled = false;
     }
 
     void OnDisable()
@@ -47,6 +40,5 @@ public class PauseManager : MonoBehaviour
             return;
 
         hud.SetActive(true);
-        // mainCam.parent.GetComponent<CameraController>().enabled = true;
     }
 }

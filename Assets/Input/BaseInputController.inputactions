@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "Tap(duration=0.005)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TestAction",
+                    "type": "Button",
+                    "id": "e38030cd-3e75-4815-ae27-6f37e1369cad",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -351,6 +360,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38a9c62f-3f66-42f0-8ec7-f020210b0b53",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TestAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
