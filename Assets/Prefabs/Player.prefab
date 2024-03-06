@@ -1784,6 +1784,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   isActive: 0
+  canPickUpItems: 0
 --- !u!95 &7096116546458137335
 Animator:
   serializedVersion: 5
@@ -2643,7 +2644,6 @@ GameObject:
   - component: {fileID: 4757321575163165101}
   - component: {fileID: 2614675097917902990}
   - component: {fileID: 5059895541522358448}
-  - component: {fileID: 637010724676188374}
   - component: {fileID: 9184271429814702550}
   - component: {fileID: 4614113402246483186}
   - component: {fileID: 7650522970278675255}
@@ -2671,7 +2671,7 @@ Transform:
   - {fileID: 326598864910314975}
   - {fileID: 5974499922754511067}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2614675097917902990
 CharacterController:
@@ -2711,20 +2711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d913b65bca40564cafee35aabfc0740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &637010724676188374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7530111583084708107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11d7fa1c6d9396e478adbf55b82a78dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveIndex: 0
-  savePoints: []
 --- !u!114 &9184271429814702550
 MonoBehaviour:
   m_ObjectHideFlags: 0

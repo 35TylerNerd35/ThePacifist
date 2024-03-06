@@ -81,7 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f959a8c3c9ec23f4e9a9c17a90bc95d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOldConsole: 0
   commands:
   - help
   - quit
@@ -169,7 +168,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: PlayerInputs
+  m_DefaultActionMap: b99fc64d-f270-4d2e-b23c-a4ed21159449
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &727098638683362281
@@ -722,7 +721,7 @@ Transform:
   - {fileID: 7462136249540339223}
   - {fileID: 8762661593520209324}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5613295830672062167
 BoxCollider:

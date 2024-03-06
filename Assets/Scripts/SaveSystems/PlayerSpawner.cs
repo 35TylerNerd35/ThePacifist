@@ -22,17 +22,14 @@ public class PlayerSpawner : MonoBehaviour
         Quaternion playerRot = savePoints[saveIndex].playerRot;
 
         //Set player to pos
-        transform.position = playerSpawnPos;
-        transform.rotation = playerRot;
-        
+        transform.GetChild(0).position = playerSpawnPos;
+        transform.GetChild(0).rotation = playerRot;
+        transform.GetChild(0).gameObject.SetActive(true);
 
-        MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
+        MonoBehaviour[] scripts = transform.GetChild(0).GetComponents<MonoBehaviour>();
         foreach(MonoBehaviour script in scripts)
         {
             script.enabled = true;
         }
-
-        //Destroy self
-        // Destroy(this);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TyeUtils;
+using UnityEngine.InputSystem;
 
 public class NewSit : MonoBehaviour, IInteract
 {
@@ -22,9 +23,7 @@ public class NewSit : MonoBehaviour, IInteract
 
     void Awake()
     {
-        playerCam = Camera.main.transform;
-        player = GameObject.FindWithTag("Player").transform;
-
+        player = GameObject.FindWithTag("PlayerParent").transform.GetChild(0);
         pauseMenu = GameObject.FindWithTag("PauseParent");
     }   
 
@@ -32,23 +31,17 @@ public class NewSit : MonoBehaviour, IInteract
 
     public void Interaction()
     {
-        //Disable player input
-        player.GetComponent<PlayerController>().enabled = false;
-        player.GetComponent<CharacterController>().enabled = false;
-        player.GetComponent<CameraController>().enabled = false;
+
+
+        EnableInput(false);
 
         pauseMenu.SetActive(false);
-
         player.GetChild(1).gameObject.SetActive(false);
 
-        //Disable camera children
-        foreach(Transform child in playerCam)
-        {
-            child.gameObject.SetActive(false);
-        }
 
-        //Enable UI
-        UIObj.SetActive(true);
+        playerCam = Camera.main.transform;
+        foreach(Transform child in playerCam)
+            child.gameObject.SetActive(false);
 
         //Set previous Vectors
         previousPlayerPos = player.position;
@@ -86,12 +79,7 @@ public class NewSit : MonoBehaviour, IInteract
 
     void FinishUnzoom()
     {
-        UIObj.SetActive(false);
-
-        //Enable player input
-        player.GetComponent<PlayerController>().enabled = true;
-        player.GetComponent<CharacterController>().enabled = true;
-        player.GetComponent<CameraController>().enabled = true;
+        EnableInput(true);
 
         player.GetChild(1).gameObject.SetActive(true);
         pauseMenu.SetActive(true);
@@ -101,5 +89,25 @@ public class NewSit : MonoBehaviour, IInteract
         {
             child.gameObject.SetActive(true);
         }
+    }
+
+    void EnableInput(bool isEnabled)
+    {
+        // player = playerParent.GetChild(0);
+
+        UIObj.SetActive(!isEnabled);
+
+        float gravity = PlayerController.gravity;
+
+        if(gravity == -9.8f)
+            Camera.main.transform.GetComponent<Animator>().enabled = isEnabled;
+        else
+            Camera.main.transform.GetComponent<Animator>().enabled = false;
+
+        player.GetComponent<CharacterController>().enabled = isEnabled;
+        player.GetComponent<PlayerController>().enabled = isEnabled;
+        player.GetComponent<CameraController>().enabled = isEnabled;
+
+        player.GetComponent<PlayerInput>().enabled = isEnabled;
     }
 }
