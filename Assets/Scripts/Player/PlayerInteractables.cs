@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public interface IInteract
+{
+    public void Interaction();
+}
+
+
 public class PlayerInteractables : MonoBehaviour
 {
     public static bool isNotInteractableGlobal;

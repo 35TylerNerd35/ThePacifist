@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.Audio;
 
 public class LoadUIData : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class LoadUIData : MonoBehaviour
 
     public BaseInputController inputController;
     InputAction pause;
+    [SerializeField] AudioMixer myMixer;
 
     [Header("Sliders")]
     [SerializeField] Slider[] sliderVars;
@@ -62,6 +64,11 @@ public class LoadUIData : MonoBehaviour
 
             //Add to iteration count
             currentSliderIteration++;
+
+            //Set audio
+            if(playerPrefSliderString[currentSliderIteration].Contains("Vol"))
+                myMixer.SetFloat(playerPrefSliderString[currentSliderIteration], var.value);
+
         }
 
         //Load toggle data
@@ -93,6 +100,10 @@ public class LoadUIData : MonoBehaviour
 
             //Add to iteration count
             currentSliderIteration++;
+
+            //Set audio
+            if(playerPrefSliderString[currentSliderIteration].Contains("Vol"))
+                myMixer.SetFloat(playerPrefSliderString[currentSliderIteration], var.value);
         }
 
         //Save slider data

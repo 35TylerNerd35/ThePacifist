@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public enum States{
     Idle,
     Patrol,
+    Follow,
     Attack,
     Flee
 }
@@ -18,6 +19,8 @@ public class StateManager : MonoBehaviour
     [SerializeField] States currentState;
     [SerializeField] StateBaseClass[] states;
     States lastState;
+    [Space]
+    [SerializeField] public NavMeshAgent agent;
 
     void Start()
     {

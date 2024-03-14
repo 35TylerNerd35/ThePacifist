@@ -18,14 +18,13 @@ public class IdleState : StateBaseClass
 
     public override void UpdateMyState()
     {
-        PatrolSwitch();
+        if(FollowCheck())
+            myManager.SwitchState(States.Follow);
+        else if(PatrolCheck())
+            myManager.SwitchState(States.Patrol);
     }
 
-    void PatrolSwitch()
-    {
-        if(Random.Range(0, 100) > 15)
-            return;
+    bool PatrolCheck() {return Random.Range(0, 100) < chanceToPatrol;}
 
-        GetComponent<StateManager>().SwitchState(States.Patrol);
-    }
+    bool FollowCheck() {return false;}
 }
