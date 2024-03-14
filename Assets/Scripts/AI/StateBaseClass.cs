@@ -10,6 +10,7 @@ public abstract class StateBaseClass : MonoBehaviour
     protected NavMeshAgent agent;
     protected StateManager myManager;
     protected Vector3 targetPos;
+    protected Animator anim;
 
     public abstract void StartMyState();
     public abstract void UpdateMyState();
@@ -48,7 +49,23 @@ public abstract class StateBaseClass : MonoBehaviour
         if(agent != null)
             agent.destination = targetPos;
 
+        if(CheckAttack())
+            myManager.SwitchState(States.Attack);
+
+        if(CheckFollow())
+            myManager.SwitchState(States.Follow);
+
         UpdateMyState();
+    }
+
+    bool CheckAttack()
+    {
+        return false;
+    }
+
+    bool CheckFollow()
+    {
+        return false;
     }
 
 }

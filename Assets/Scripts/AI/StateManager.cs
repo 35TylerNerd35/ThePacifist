@@ -31,12 +31,6 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
-            currentState = States.Idle;
-
-        if(Input.GetKeyDown(KeyCode.Y))
-            currentState = States.Patrol;
-
         if(currentState != lastState)
             SwitchState(currentState);
     }

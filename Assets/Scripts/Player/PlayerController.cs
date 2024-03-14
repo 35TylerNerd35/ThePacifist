@@ -67,26 +67,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] float groundDistance  = .4f;
     [SerializeField] LayerMask groundMask;
+
     bool isGrounded;
 
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
 
-        //Ensure normal gravity on game start
+        //Set default vals
         gravity = -9.8f;
-
-        canDash = true;
-    }
-
-
-    void Start()
-    {
-        //Allow for detection of collisions
-        charC.detectCollisions = true;
-
-        //Set default move speed
         speed = myStats[(int)TweenVars.Walking].speed;
+        canDash = true;
+        charC.detectCollisions = true;
     }
 
     void Update()

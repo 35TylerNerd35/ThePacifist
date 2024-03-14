@@ -24,7 +24,13 @@ public class IdleState : StateBaseClass
             myManager.SwitchState(States.Patrol);
     }
 
-    bool PatrolCheck() {return Random.Range(0, 100) < chanceToPatrol;}
+    bool PatrolCheck()
+    {
+        return Random.Range(0, 100) < chanceToPatrol;
+    }
 
-    bool FollowCheck() {return false;}
+    bool FollowCheck()
+    {
+        return false;
+    }
 }
