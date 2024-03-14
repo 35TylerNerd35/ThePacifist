@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [System.Serializable]
 public enum States{
@@ -37,7 +38,7 @@ public class StateManager : MonoBehaviour
             SwitchState(currentState);
     }
 
-    void SwitchState(States newState)
+    public void SwitchState(States newState)
     {
         states[(int)lastState].EndState();
         lastState = newState;
