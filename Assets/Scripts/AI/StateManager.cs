@@ -19,11 +19,14 @@ public class StateManager : MonoBehaviour
     [SerializeField] States currentState;
     [SerializeField] StateBaseClass[] states;
     States lastState;
-    [Space]
-    [SerializeField] public NavMeshAgent agent;
+    
+    [HideInInspector] public NavMeshAgent agent;
 
     void Start()
     {
+        agent = transform.parent.GetComponent<NavMeshAgent>();
+
+        //Setup init state
         states[(int)initState].StartState();
         currentState = initState;
         lastState = initState;

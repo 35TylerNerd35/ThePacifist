@@ -12,6 +12,8 @@ public abstract class StateBaseClass : MonoBehaviour
     protected Vector3 targetPos;
     protected Animator anim;
 
+    [SerializeField] string clipToPlay;
+
     public abstract void StartMyState();
     public abstract void UpdateMyState();
     public abstract void EndMyState();
@@ -24,11 +26,13 @@ public abstract class StateBaseClass : MonoBehaviour
 
         myManager = GetComponent<StateManager>();
         agent = myManager.agent;
+        anim = transform.parent.GetComponent<Animator>();
     }
 
     public void StartState()
     {
         isRunning = true;
+        anim.SetTrigger(clipToPlay);
 
         StartMyState();
     }

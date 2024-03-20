@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainGame.unity
     guid: 9e8269f022343874cba0fda4098d442b
   - enabled: 1
-    path: Assets/PolygonSciFiSpace/Scenes/Demo_Interior.unity
+    path: Assets/Packages/PolygonSciFiSpace/Scenes/Demo_Interior.unity
     guid: 60bc4c0d7fa81944290d3eaf8d44a851
   m_configObjects: {}
