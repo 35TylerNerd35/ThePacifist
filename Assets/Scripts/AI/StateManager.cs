@@ -45,11 +45,11 @@ public class StateManager : MonoBehaviour
     public void SwitchState(States newState)
     {
         states[(int)lastState].EndState();
-        GameLog.Log(2, this.ToString(), $"Ending {lastState} State");
+        GameLog.Log(this.ToString(), $"Ending {lastState} State", 2);
         lastState = newState;
         currentState = newState;
         states[(int)lastState].StartState();
-        GameLog.Log(0, this.ToString(), $"Starting {lastState} State");
+        GameLog.Log(this.ToString(), $"Starting {lastState} State");
     }
 
     public void AnimationSwitch(string anim, float transitionTime = .2f)

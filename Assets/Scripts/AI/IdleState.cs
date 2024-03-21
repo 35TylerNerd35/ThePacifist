@@ -20,7 +20,7 @@ public class IdleState : StateBaseClass
         {
             while(isRunning)
             {
-                yield return new WaitForSeconds(Random.Range(1.3f, 6));
+                yield return new WaitForSeconds(Random.Range(1.3f, 3));
                 canPatrol = Random.Range(0, 100) < chanceToPatrol;
             }
         }

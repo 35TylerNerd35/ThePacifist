@@ -35,7 +35,21 @@ using TyeUtils;
 
 
     -
-#Something Else
+#GameLogs
 
+    Commands:
+        GameLogs.Log();
+        GameLogs.Warning();
+        GameLogs.Error();
 
-    -
+    Paramaters (Required):
+        Title (string): The 'header' of the log
+        Message (string): The content of the log
+
+    Paramaters (Optional):
+        priority (int 0-3): the priority of the content (blue, orange, red), defaults to 0
+
+    Examples:
+        GameLogs.Log("HEADER", "I am a script");
+        GameLogs.Warning("I am warning", "I am to warn of something", 2);
+        GameLogs.Error("ERROR!!", "I have messed up", 3);
