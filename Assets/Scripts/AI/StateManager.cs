@@ -21,10 +21,14 @@ public class StateManager : MonoBehaviour
     States lastState;
     
     [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public Animator animator;
+
+    string currentAnim;
 
     void Start()
     {
         agent = transform.parent.GetComponent<NavMeshAgent>();
+        animator = transform.parent.GetComponent<Animator>();
 
         //Setup init state
         states[(int)initState].StartState();
@@ -41,7 +45,18 @@ public class StateManager : MonoBehaviour
     public void SwitchState(States newState)
     {
         states[(int)lastState].EndState();
+        GameLog.Log(2, this.ToString(), $"Ending {lastState} State");
         lastState = newState;
+        currentState = newState;
         states[(int)lastState].StartState();
+        GameLog.Log(0, this.ToString(), $"Starting {lastState} State");
+    }
+
+    public void AnimationSwitch(string anim, float transitionTime = .2f)
+    {
+        if(currentAnim == anim)
+            return;
+
+        animator.CrossFade(anim, transitionTime);
     }
 }

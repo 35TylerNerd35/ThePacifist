@@ -7,47 +7,49 @@ public class IdleState : StateBaseClass
     int chanceToPatrol = 15;
     bool canPatrol;
 
+    int myIdleIndex = 0;
+
     public override void StartMyState()
     {
-        targetPos = transform.parent.position;
-        StartCoroutine(AllowPatrol());
+        targetPos = transform.parent.position + (transform.parent.forward * .2f);
+        canPatrol = false;
+        StartCoroutine(CheckPatrol());
+        StartCoroutine(ChangeIdle());
 
-        GameLog.Log(0, this.ToString(), "Start Idle State");
+        IEnumerator CheckPatrol()
+        {
+            while(isRunning)
+            {
+                yield return new WaitForSeconds(Random.Range(1.3f, 6));
+                canPatrol = Random.Range(0, 100) < chanceToPatrol;
+            }
+        }
+
+        IEnumerator ChangeIdle()
+        {
+            while(isRunning)
+            {
+                yield return new WaitForSeconds(Random.Range(1, 4));
+                myIdleIndex += 1;
+
+                if(myIdleIndex >= 5)
+                    myIdleIndex = 0;
+
+                myManager.AnimationSwitch($"Idle {myIdleIndex}");
+            }
+        }
     }
 
     public override void EndMyState()
     {
-        GameLog.Log(2, this.ToString(), "End Idle State");
+        StopAllCoroutines();
     }
 
     public override void UpdateMyState()
     {
-        if(FollowCheck())
-        {
-            myManager.SwitchState(States.Follow);
-        }
-        else if(PatrolCheck())
+        if(canPatrol)
         {
             myManager.SwitchState(States.Patrol);
         }
-    }
-
-    IEnumerator AllowPatrol()
-    {
-        yield return new WaitForSeconds(3);
-        canPatrol = true;
-    }
-
-    bool PatrolCheck()
-    {
-        if(!canPatrol)
-            return false;
-
-        return Random.Range(0, 100) < chanceToPatrol;
-    }
-
-    bool FollowCheck()
-    {
-        return false;
     }
 }

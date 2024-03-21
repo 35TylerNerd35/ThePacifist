@@ -4,33 +4,34 @@ using UnityEngine;
 
 public class PatrolState : StateBaseClass
 {
-    bool checkPatrolFinished;
+    bool canStop;
 
     public override void StartMyState()
     {
         targetPos = RandPatrolPoint();
-        GameLog.Log(1, this.ToString(), "Start Patrol State");
-        StartCoroutine(CheckPatrol());
+
+        StartCoroutine(AllowStop());
     }
 
     public override void EndMyState()
     {
-        checkPatrolFinished = false;
+        StopAllCoroutines();
+        canStop = false;
     }
 
     public override void UpdateMyState()
     {
-        if(!checkPatrolFinished)
+        if(!canStop)
             return;
 
         if(PatrolFinished())
             myManager.SwitchState(States.Idle);
     }
 
-    IEnumerator CheckPatrol()
+    IEnumerator AllowStop()
     {
         yield return new WaitForSeconds(1);
-        checkPatrolFinished = true;
+        canStop = true;
     }
 
     bool PatrolFinished()
@@ -42,6 +43,8 @@ public class PatrolState : StateBaseClass
 
     Vector3 RandPatrolPoint()
     {
+        Vector3 returnVal;
+
         float multiplier = transform.parent.parent.GetChild(0).localScale.x;
         //Find random point within range and add to current position to get new pos
         Vector3 randDir = Random.insideUnitSphere * multiplier;
@@ -51,6 +54,11 @@ public class PatrolState : StateBaseClass
         UnityEngine.AI.NavMeshHit hit;
         UnityEngine.AI.NavMesh.SamplePosition(randDir, out hit, multiplier, UnityEngine.AI.NavMesh.AllAreas);
 
-        return hit.position;
+        if(Vector3.Distance(hit.position, transform.parent.position) < 10)
+            returnVal = RandPatrolPoint();
+        else
+            returnVal = hit.position;
+
+        return returnVal;
     }
 }

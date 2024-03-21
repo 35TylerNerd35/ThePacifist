@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public abstract class StateBaseClass : MonoBehaviour
 {
-    bool isRunning;
+    protected bool isRunning;
     
     protected NavMeshAgent agent;
     protected StateManager myManager;
@@ -13,6 +13,7 @@ public abstract class StateBaseClass : MonoBehaviour
     protected Animator anim;
 
     [SerializeField] string clipToPlay;
+    [SerializeField] float clipFadeTime = .2f;
 
     public abstract void StartMyState();
     public abstract void UpdateMyState();
@@ -26,13 +27,13 @@ public abstract class StateBaseClass : MonoBehaviour
 
         myManager = GetComponent<StateManager>();
         agent = myManager.agent;
-        anim = transform.parent.GetComponent<Animator>();
     }
 
     public void StartState()
     {
         isRunning = true;
-        anim.SetTrigger(clipToPlay);
+        
+        myManager.AnimationSwitch(clipToPlay, clipFadeTime);
 
         StartMyState();
     }
