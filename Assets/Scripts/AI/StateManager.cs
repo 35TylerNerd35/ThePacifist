@@ -22,13 +22,20 @@ public class StateManager : MonoBehaviour
     
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Animator animator;
-
+    [HideInInspector] public List<GameObject> myEnemyList;
+    [Space]
+    public string tagToAttack;
     string currentAnim;
+
+    [SerializeField] int maxHealth = 100;
+    [SerializeField] int currentHealth;
 
     void Start()
     {
         agent = transform.parent.GetComponent<NavMeshAgent>();
         animator = transform.parent.GetComponent<Animator>();
+
+        currentHealth = maxHealth;
 
         //Setup init state
         states[(int)initState].StartState();
@@ -36,10 +43,18 @@ public class StateManager : MonoBehaviour
         lastState = initState;
     }
 
+    void OnEnable()
+    {
+        InitialCheckForEnemies();
+    }
+
     void Update()
     {
         if(currentState != lastState)
             SwitchState(currentState);
+
+        if(currentHealth < (maxHealth / 5))
+            currentState = States.Flee;
     }
 
     public void SwitchState(States newState)
@@ -58,5 +73,21 @@ public class StateManager : MonoBehaviour
             return;
 
         animator.CrossFade(anim, transitionTime);
+    }
+
+    void InitialCheckForEnemies()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 300, 6);
+
+        foreach (Collider col in colliders) //add all enemies found in an initial list
+        {
+            if (Vector3.Distance(transform.position, col.transform.position) < 1)
+                return;
+
+            if(col.gameObject.tag != "Player" && col.gameObject.tag != tagToAttack)
+                return;
+
+            myEnemyList.Add(col.gameObject);
+        }
     }
 }

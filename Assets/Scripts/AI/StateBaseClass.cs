@@ -15,6 +15,11 @@ public abstract class StateBaseClass : MonoBehaviour
     [SerializeField] string clipToPlay;
     [SerializeField] float clipFadeTime = .2f;
 
+    float viewRange = 7;
+    float attackRange = 3;
+    int viewAngle = 35;
+
+
     public abstract void StartMyState();
     public abstract void UpdateMyState();
     public abstract void EndMyState();

@@ -30,10 +30,8 @@ public class IdleState : StateBaseClass
             while(isRunning)
             {
                 yield return new WaitForSeconds(Random.Range(1, 4));
-                myIdleIndex += 1;
 
-                if(myIdleIndex >= 5)
-                    myIdleIndex = 0;
+                myIdleIndex = Random.Range(0, 5);
 
                 myManager.AnimationSwitch($"Idle {myIdleIndex}");
             }
