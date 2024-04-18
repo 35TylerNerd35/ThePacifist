@@ -5,12 +5,11 @@ using UnityEngine.AI;
 
 public abstract class StateBaseClass : MonoBehaviour
 {
-    protected bool isRunning;
+    [HideInInspector] public bool isRunning;
     
     protected NavMeshAgent agent;
     protected StateManager myManager;
-    protected Vector3 targetPos;
-    protected Animator anim;
+    Animator anim;
 
     [SerializeField] string clipToPlay;
     [SerializeField] float clipFadeTime = .2f;
@@ -39,6 +38,7 @@ public abstract class StateBaseClass : MonoBehaviour
         isRunning = true;
         
         myManager.AnimationSwitch(clipToPlay, clipFadeTime);
+        // GameLog.Log(this.ToString(), clipToPlay, 0);
 
         StartMyState();
     }
@@ -56,8 +56,8 @@ public abstract class StateBaseClass : MonoBehaviour
 
     public void UpdateState()
     {
-        if(agent != null)
-            agent.destination = targetPos;
+        // if(agent != null)
+        //     agent.destination = targetPos;
 
         if(CheckAttack())
             myManager.SwitchState(States.Attack);

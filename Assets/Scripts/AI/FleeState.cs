@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class FleeState : StateBaseClass
 {
+    float runSpeedMultiplier = 3f;
+
     public override void StartMyState()
     {
-        Debug.Log("Start RUNNING");
-        targetPos = new(2, 4, 2);
+        myManager.agent.speed *= runSpeedMultiplier;
+        myManager.SetDestination(new Vector3(2, 4, 2));
     }
 
     public override void EndMyState()
     {
+        myManager.agent.speed /= runSpeedMultiplier;
         Debug.Log("End RUNNING");
     }
 

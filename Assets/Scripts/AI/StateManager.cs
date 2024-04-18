@@ -18,7 +18,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] States initState;
     [SerializeField] States currentState;
     [SerializeField] StateBaseClass[] states;
-    States lastState;
+    [SerializeField] States lastState;
     
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Animator animator;
@@ -60,11 +60,11 @@ public class StateManager : MonoBehaviour
     public void SwitchState(States newState)
     {
         states[(int)lastState].EndState();
-        GameLog.Log(this.ToString(), $"Ending {lastState} State", 2);
+        // GameLog.Log(this.ToString(), $"Ending {lastState} State", 2);
         lastState = newState;
         currentState = newState;
         states[(int)lastState].StartState();
-        GameLog.Log(this.ToString(), $"Starting {lastState} State");
+        // GameLog.Log(this.ToString(), $"Starting {lastState} State");
     }
 
     public void AnimationSwitch(string anim, float transitionTime = .2f)
@@ -73,6 +73,14 @@ public class StateManager : MonoBehaviour
             return;
 
         animator.CrossFade(anim, transitionTime);
+    }
+
+    public void SetDestination(Vector3 targetPos)
+    {
+        if(agent == null)
+            return;
+
+        agent.destination = targetPos;
     }
 
     void InitialCheckForEnemies()

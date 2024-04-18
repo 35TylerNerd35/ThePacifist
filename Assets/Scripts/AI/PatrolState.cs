@@ -8,7 +8,7 @@ public class PatrolState : StateBaseClass
 
     public override void StartMyState()
     {
-        targetPos = RandPatrolPoint();
+        myManager.SetDestination(RandPatrolPoint());
 
         StartCoroutine(AllowStop());
     }

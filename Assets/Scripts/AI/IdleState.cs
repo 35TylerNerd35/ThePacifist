@@ -11,7 +11,9 @@ public class IdleState : StateBaseClass
 
     public override void StartMyState()
     {
-        targetPos = transform.parent.position + (transform.parent.forward * .2f);
+        Vector3 targetPos = transform.parent.position + (transform.parent.forward * .2f);
+        myManager.SetDestination(targetPos);
+
         canPatrol = false;
         StartCoroutine(CheckPatrol());
         StartCoroutine(ChangeIdle());
@@ -33,7 +35,7 @@ public class IdleState : StateBaseClass
 
                 myIdleIndex = Random.Range(0, 5);
 
-                myManager.AnimationSwitch($"Idle {myIdleIndex}");
+                myManager.AnimationSwitch($"Idle {myIdleIndex}", .4f);
             }
         }
     }
@@ -47,6 +49,7 @@ public class IdleState : StateBaseClass
     {
         if(canPatrol)
         {
+            // GameLog.Log(this.ToString(), "Switching to Patrol...", 0);
             myManager.SwitchState(States.Patrol);
         }
     }
