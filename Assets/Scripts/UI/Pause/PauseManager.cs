@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
@@ -40,5 +41,15 @@ public class PauseManager : MonoBehaviour
             return;
 
         hud.SetActive(true);
+    }
+
+    public void QuitMain()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
     }
 }
