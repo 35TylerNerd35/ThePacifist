@@ -739,6 +739,15 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""c75e021b-9b82-49ba-88b2-ab5ad5c54603"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -895,6 +904,28 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
                     ""action"": ""Unselect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f5e0b14-b669-4f62-ba8a-1c18e19c0833"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5d4f42d-ffc8-4103-bc5b-aee0e2125e69"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -927,6 +958,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
         m_ConsoleInputs_Backspace = m_ConsoleInputs.FindAction("Backspace", throwIfNotFound: true);
         m_ConsoleInputs_CaretMovement = m_ConsoleInputs.FindAction("CaretMovement", throwIfNotFound: true);
         m_ConsoleInputs_Unselect = m_ConsoleInputs.FindAction("Unselect", throwIfNotFound: true);
+        m_ConsoleInputs_Close = m_ConsoleInputs.FindAction("Close", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1189,6 +1221,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
     private readonly InputAction m_ConsoleInputs_Backspace;
     private readonly InputAction m_ConsoleInputs_CaretMovement;
     private readonly InputAction m_ConsoleInputs_Unselect;
+    private readonly InputAction m_ConsoleInputs_Close;
     public struct ConsoleInputsActions
     {
         private @BaseInputController m_Wrapper;
@@ -1198,6 +1231,7 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
         public InputAction @Backspace => m_Wrapper.m_ConsoleInputs_Backspace;
         public InputAction @CaretMovement => m_Wrapper.m_ConsoleInputs_CaretMovement;
         public InputAction @Unselect => m_Wrapper.m_ConsoleInputs_Unselect;
+        public InputAction @Close => m_Wrapper.m_ConsoleInputs_Close;
         public InputActionMap Get() { return m_Wrapper.m_ConsoleInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1222,6 +1256,9 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
             @Unselect.started += instance.OnUnselect;
             @Unselect.performed += instance.OnUnselect;
             @Unselect.canceled += instance.OnUnselect;
+            @Close.started += instance.OnClose;
+            @Close.performed += instance.OnClose;
+            @Close.canceled += instance.OnClose;
         }
 
         private void UnregisterCallbacks(IConsoleInputsActions instance)
@@ -1241,6 +1278,9 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
             @Unselect.started -= instance.OnUnselect;
             @Unselect.performed -= instance.OnUnselect;
             @Unselect.canceled -= instance.OnUnselect;
+            @Close.started -= instance.OnClose;
+            @Close.performed -= instance.OnClose;
+            @Close.canceled -= instance.OnClose;
         }
 
         public void RemoveCallbacks(IConsoleInputsActions instance)
@@ -1286,5 +1326,6 @@ public partial class @BaseInputController: IInputActionCollection2, IDisposable
         void OnBackspace(InputAction.CallbackContext context);
         void OnCaretMovement(InputAction.CallbackContext context);
         void OnUnselect(InputAction.CallbackContext context);
+        void OnClose(InputAction.CallbackContext context);
     }
 }

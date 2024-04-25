@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class ToggleGraphics : MonoBehaviour
 {
     [SerializeField] GameObject toggleGraphic;
-    [SerializeField] bool ivertGraphic = true;
+    [SerializeField] bool invertGraphic = true;
 
     Toggle toggle;
 
-    void Awake()
+    void OnEnable()
     {
         toggle = GetComponent<Toggle>();
         toggle.onValueChanged.AddListener(delegate {
@@ -20,10 +20,10 @@ public class ToggleGraphics : MonoBehaviour
 
     public void ToggleValueChanged(Toggle change)
     {
-        if (change.isOn && !ivertGraphic)
+        if (change.isOn && !invertGraphic)
             toggleGraphic.SetActive(true);
 
-        else if(!change.isOn && ivertGraphic)
+        else if(!change.isOn && invertGraphic)
             toggleGraphic.SetActive(true);
 
         else
