@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class LoadSettingsData : MonoBehaviour
 {
+    public delegate void MyEvent();
+    public static event MyEvent SettingsUpdated;
+
     [Header("Audio")]
     public Slider[] vols;
     public Toggle[] mutes;
@@ -68,5 +71,6 @@ public class LoadSettingsData : MonoBehaviour
         SaveSystem.data.isFullscreen = isFullscreen.isOn;
 
         SaveSystem.SaveData();
+        SettingsUpdated();
     }
 }

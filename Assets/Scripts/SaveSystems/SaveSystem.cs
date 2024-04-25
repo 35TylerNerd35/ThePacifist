@@ -27,7 +27,7 @@ public class MySaveData
 
         //Default gameplay settings
         sensSliders = new float[] {60, 60};
-        fovVal = 60;
+        fovVal = 1;
         subtitleOpacity = 100;
 
         doHeadBob = true;

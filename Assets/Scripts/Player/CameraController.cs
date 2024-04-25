@@ -26,6 +26,9 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
+        LoadSettingsData.SettingsUpdated += UpdateSettings;
+        UpdateSettings();
+
         playerInput = GetComponent<PlayerInput>();
     }
 
@@ -63,5 +66,11 @@ public class CameraController : MonoBehaviour
         //Apply percentage to sens
         sensitivity.x = defaultSensitivity.x * 2 * sensValMultiplierX;
         sensitivity.y = defaultSensitivity.y * 2 * sensValMultiplierY;
+    }
+
+    public void UpdateSettings()
+    {
+        defaultSensitivity.x = SaveSystem.data.sensSliders[0];
+        defaultSensitivity.y = SaveSystem.data.sensSliders[1];
     }
 }

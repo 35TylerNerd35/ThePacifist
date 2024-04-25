@@ -32,8 +32,6 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Stats")]
     [SerializeField] public static float gravity = -9.8f;
     [SerializeField] public static float jumpHeight = 2f;
-    [Space]
-    [SerializeField] float headBob;
 
     [Header("Tween Stats")]
     [SerializeField] Image speedLines;
@@ -46,6 +44,7 @@ public class PlayerController : MonoBehaviour
     TweenUtils scaleTweener = new();
     
     float currentFOV;
+    float fovMultiplier = 1;
 
     [Header("Booster Boots")]
     [SerializeField] float dashTweenTime;
@@ -72,6 +71,9 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        LoadSettingsData.SettingsUpdated += UpdateSettings;
+        UpdateSettings();
+
         playerInput = GetComponent<PlayerInput>();
 
         //Set default vals
@@ -155,7 +157,7 @@ public class PlayerController : MonoBehaviour
         float[] vals = new float[4];
 
         vals[0] = myStats[(int)state].speed;
-        vals[1] = myStats[(int)state].fovVal;
+        vals[1] = myStats[(int)state].fovVal * fovMultiplier;
         vals[2] = myStats[(int)state].speedLineAlpha;
         targetScale =  myStats[(int)state].speedLineScale;
 
@@ -240,5 +242,19 @@ public class PlayerController : MonoBehaviour
         //Handle additional velocity from dashing in zero gravity
         isPlayerFloating = false;
         velocity = Vector3.zero;
+    }
+
+    public void UpdateSettings()
+    {
+        if(!SaveSystem.data.doHeadBob)
+        {
+            transform.GetChild(0).GetComponent<Animator>().enabled = false;
+        }
+        else
+        {
+            transform.GetChild(0).GetComponent<Animator>().enabled = true;
+        }
+
+        fovMultiplier = SaveSystem.data.fovVal;
     }
 }
