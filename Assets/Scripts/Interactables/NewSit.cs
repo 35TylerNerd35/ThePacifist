@@ -18,6 +18,7 @@ public class NewSit : MonoBehaviour, IInteract
     Vector3 previousPlayerRot;
     Vector3 previousPlayerCamPos;
     Vector3 previousPlayerCamRot;
+    float previousPlayerFOV;
 
     GameObject pauseMenu;
 
@@ -48,6 +49,7 @@ public class NewSit : MonoBehaviour, IInteract
         previousPlayerRot = player.eulerAngles;
         previousPlayerCamPos = playerCam.position;
         previousPlayerCamRot = playerCam.eulerAngles;
+        previousPlayerFOV = Camera.main.fieldOfView;
 
         //Tween values
         TweenUtils tweenUtils = new();
@@ -58,6 +60,9 @@ public class NewSit : MonoBehaviour, IInteract
         tweenUtils3.StartVector3Tween(this, player.position, sitPos.position, val => {player.position = val;}, zoomTime);
         TweenUtils tweenUtils4 = new();
         tweenUtils4.StartVector3Tween(this, player.eulerAngles, sitPos.eulerAngles, val => {player.eulerAngles = val;}, zoomTime);
+        TweenUtils tweenUtils5 = new();
+        tweenUtils5.StartFloatTween(this, Camera.main.fieldOfView, 60, val => {Camera.main.fieldOfView = val;}, zoomTime);
+
     }
 
     public void CloseConsole()
@@ -73,6 +78,8 @@ public class NewSit : MonoBehaviour, IInteract
         tweenUtils3.StartVector3Tween(this, player.position, previousPlayerPos, val => {player.position = val;}, zoomTime);
         TweenUtils tweenUtils4 = new();
         tweenUtils4.StartVector3Tween(this, player.eulerAngles, previousPlayerRot, val => {player.eulerAngles = val;}, zoomTime);
+        TweenUtils tweenUtils5 = new();
+        tweenUtils5.StartFloatTween(this, Camera.main.fieldOfView, previousPlayerFOV, val => {Camera.main.fieldOfView = val;}, zoomTime);
 
         tweenUtils4.TweenFinished += FinishUnzoom;
     }
@@ -99,7 +106,7 @@ public class NewSit : MonoBehaviour, IInteract
 
         float gravity = PlayerController.gravity;
 
-        if(gravity == -9.8f)
+        if(gravity == -9.8f && SaveSystem.data.doHeadBob)
             Camera.main.transform.GetComponent<Animator>().enabled = isEnabled;
         else
             Camera.main.transform.GetComponent<Animator>().enabled = false;

@@ -19,7 +19,12 @@ public class LoadSettingsData : MonoBehaviour
     public Toggle doHeadBob;
     public Toggle isFullscreen;
 
-    void OnEnable()
+    public void OnEnable()
+    {
+        LoadSettings();
+    }
+
+    public void LoadSettings()
     {
         for(int i = 0; i < vols.Length; i++)
         {
@@ -71,6 +76,8 @@ public class LoadSettingsData : MonoBehaviour
         SaveSystem.data.isFullscreen = isFullscreen.isOn;
 
         SaveSystem.SaveData();
-        SettingsUpdated();
+
+        if(SettingsUpdated != null)
+            SettingsUpdated();
     }
 }

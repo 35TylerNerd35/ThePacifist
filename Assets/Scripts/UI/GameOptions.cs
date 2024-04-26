@@ -65,4 +65,10 @@ public class GameOptions : MonoBehaviour
         PlayerPrefs.SetInt("isFullScreen", toggleVal ? 1 : 0);
         PlayerPrefs.Save();
     }
+
+    public void ResetSettings()
+    {
+        SaveSystem.ResetData();
+        GetComponent<LoadSettingsData>().LoadSettings();
+    }
 }

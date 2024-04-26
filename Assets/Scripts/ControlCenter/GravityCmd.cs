@@ -6,7 +6,6 @@ using TMPro;
 public class GravityCmd : MonoBehaviour
 {
     public static bool isGravOn;
-    bool wasAnimatorOn;
 
     public void ConsoleGrav()
     {

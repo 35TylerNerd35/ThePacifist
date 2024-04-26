@@ -11,8 +11,6 @@ public class CameraController : MonoBehaviour
     [Header("Stats")]
     [SerializeField] Vector2 defaultSensitivity;
     [SerializeField] Vector2 sensitivity;
-    [SerializeField] Slider sensSliderX;
-    [SerializeField] Slider sensSliderY;
 
     float xRot = 0;
 
@@ -57,20 +55,9 @@ public class CameraController : MonoBehaviour
         playerHead.localRotation = Quaternion.Euler(headStartRot.x + xRot, playerHead.localRotation.y, playerHead.localRotation.z);
     }
 
-    public void UpdateSens()
-    {
-        //Grab slider value as percentage
-        float sensValMultiplierX = sensSliderX.value * 0.01f;
-        float sensValMultiplierY = sensSliderY.value * 0.01f;
-
-        //Apply percentage to sens
-        sensitivity.x = defaultSensitivity.x * 2 * sensValMultiplierX;
-        sensitivity.y = defaultSensitivity.y * 2 * sensValMultiplierY;
-    }
-
     public void UpdateSettings()
     {
-        defaultSensitivity.x = SaveSystem.data.sensSliders[0];
-        defaultSensitivity.y = SaveSystem.data.sensSliders[1];
+        sensitivity.x = defaultSensitivity.x * SaveSystem.data.sensSliders[0];
+        sensitivity.y = defaultSensitivity.y * SaveSystem.data.sensSliders[1];
     }
 }

@@ -21,18 +21,24 @@ public class MySaveData
     //Init defaults
     public MySaveData()
     {
+        ResetData();
+    }
+
+    public void ResetData()
+    {
         //Default audio settings
         vols = new float[4] {1, 1, 1, 1};
         mutes = new bool[4] {true, true, true, true};
 
         //Default gameplay settings
-        sensSliders = new float[] {60, 60};
+        sensSliders = new float[] {1, 1};
         fovVal = 1;
         subtitleOpacity = 100;
 
         doHeadBob = true;
         isFullscreen = true;
     }
+    
 }
 
 public static class SaveSystem
@@ -64,5 +70,11 @@ public static class SaveSystem
     {
         string jsonString = JsonUtility.ToJson(data, true);
         File.WriteAllText(savePath, jsonString);
+    }
+
+    public static void ResetData()
+    {
+        data.ResetData();
+        SaveData();
     }
 }

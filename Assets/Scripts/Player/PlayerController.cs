@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.GetChild(0).GetComponent<Animator>().enabled = false;
         }
-        else
+        else if(PlayerController.gravity == -9.8f)
         {
             transform.GetChild(0).GetComponent<Animator>().enabled = true;
         }
