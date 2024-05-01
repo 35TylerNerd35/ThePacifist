@@ -7,7 +7,7 @@ public class TeleportPadsCmd : MonoBehaviour
 {
     [SerializeField] float teleportActivationTime = 3f;
     [SerializeField] float teleportDelayTime = 5f;
-    [SerializeField] float teleportCooldownTime = 10f;
+    // [SerializeField] float teleportCooldownTime = 10f;
 
     public static bool isUnlocked;
     public static bool isActivated;
@@ -21,17 +21,17 @@ public class TeleportPadsCmd : MonoBehaviour
 
     void ConsoleTele()
     {
-        if(isUnlocked)
-        {
-            //Set lock state of function
-            isUnlocked = false;
-            StartCoroutine(StartUnlockSequence());
+        if(!isUnlocked)
+            return;
 
-            //Start teleportation sequence
-            activationTime = 0;
-            activatedConsole = transform;
-            isActivated = true;
-        }
+        //Set lock state of function
+        isUnlocked = false;
+        StartCoroutine(StartUnlockSequence());
+
+        //Start teleportation sequence
+        activationTime = 0;
+        activatedConsole = transform;
+        isActivated = true;
     }
 
     IEnumerator StartUnlockSequence()
@@ -42,10 +42,13 @@ public class TeleportPadsCmd : MonoBehaviour
 
     void Update()
     {
-        if(isActivated)
-        {
-            Timer();
-        }
+        if(activatedConsole != transform)
+            return;
+
+        if(!isActivated)
+            return;
+
+        Timer();
     }
 
     void Timer()
@@ -53,10 +56,10 @@ public class TeleportPadsCmd : MonoBehaviour
         activationTime += Time.deltaTime;
 
         //End time
-        if(activationTime >= teleportActivationTime)
-        {
-            isActivated = false;
-            activatedConsole = null;
-        }
+        if(activationTime < teleportActivationTime)
+            return;
+        
+        isActivated = false;
+        activatedConsole = null;
     }
 }
