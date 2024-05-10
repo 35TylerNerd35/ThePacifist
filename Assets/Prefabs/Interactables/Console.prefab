@@ -1071,11 +1071,11 @@ MonoBehaviour:
   helpLines:
   - <color=purple>help</color>- prints the help sheet
   - <color=purple>quit </color>- closes console
-  - <color=purple>test </color>- idk its a test
   - <color=purple>gravity switch </color>- switches gravity
   - on or off
   - <color=purple>Teleport</color> activates matter
   - displacement pads
+  - <color=purple></color>
   - <color=purple></color>
   - <color=purple></color>
   - <color=purple></color>
